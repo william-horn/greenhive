@@ -30,17 +30,23 @@ framework to operate. learn more about Express.js here: https://expressjs.com/
 | DOCUMENT TODO |
 ==================================================================================================================================
 
-todo:   add sequelize connection and sync it with server -Will (05/17/2022)
-todo:   import express-handlebars and set-up middleware -Will (05/17/2022)
-todo:   create 'views' folder w/ corresponding handlebars files for each route in 'controllers' -Will (05/17/2022)
+todo:   add sequelize connection and sync it with server -Will [05/17/2022]
+todo:   import express-handlebars and set-up middleware -Will [05/17/2022]
+todo:   create 'views' folder w/ corresponding handlebars files for each route in 'controllers' -Will [05/17/2022]
 
 ==================================================================================================================================
 */
+
+/* ---------------------------- */
+/* Import Environment Variables */
+/* ---------------------------- */
+require('dotenv').config();
 
 /* -------------- */
 /* Import Modules */
 /* -------------- */
 const express = require('express');
+const { engine: renderEngine } = require('express-handlebars');
 const routes = require('./controllers');
 
 /* --------------------------------- */
@@ -50,13 +56,21 @@ const routes = require('./controllers');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// app middleware
+// app middleware/network
 app.use(express.json());                        // allow requests to accept json 
 app.use(express.static('public'));              // front-end file system
 app.use(express.urlencoded({extended: true}));  // allow for nested objects in body requests
-app.use(routes);                                // 
 
-// start server
+// internal routes
+app.use(routes);
+
+// render engine
+app.engine('handlebars', renderEngine());
+app.set('view engine', 'handlebars');
+
+/* ------------ */
+/* Start Server */
+/* ------------ */
 app.listen(PORT, err => {
     if (err) throw err;
     console.log('Server running on port:', PORT);
