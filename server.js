@@ -4,10 +4,10 @@
 ==================================================================================================================================
 
 ? @contributors:        
-                        *- Aswathy Ajesh
-                        *- Jordan Weston
-                        *- Allen Bey
-                        *- William Horn
+                        * Aswathy Ajesh
+                        * Jordan Weston
+                        * Allen Bey
+                        * William Horn
 
 ? @doc-name:            server.js
 ? @doc-created:         05/17/2022
@@ -30,7 +30,9 @@ framework to operate. learn more about Express.js here: https://expressjs.com/
 | DOCUMENT TODO |
 ==================================================================================================================================
 
--   
+todo:   add sequelize connection and sync it with server -Will (05/17/2022)
+todo:   import express-handlebars and set-up middleware -Will (05/17/2022)
+todo:   create 'views' folder w/ corresponding handlebars files for each route in 'controllers' -Will (05/17/2022)
 
 ==================================================================================================================================
 */
@@ -44,9 +46,18 @@ const routes = require('./controllers');
 /* --------------------------------- */
 /* Application Set-Up and Middleware */
 /* --------------------------------- */
+// app set-up
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(express.static('public')); // front-end file system
-app.use(express.urlencoded({extended: true})); // allow for nested objects in body requests
+// app middleware
+app.use(express.json());                        // allow requests to accept json 
+app.use(express.static('public'));              // front-end file system
+app.use(express.urlencoded({extended: true}));  // allow for nested objects in body requests
+app.use(routes);                                // 
 
+// start server
+app.listen(PORT, err => {
+    if (err) throw err;
+    console.log('Server running on port:', PORT);
+});
