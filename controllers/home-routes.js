@@ -14,7 +14,7 @@ const GET_root = async (req, res) => {
 
     res.render('home', {
         pageTitle: 'Home',
-        content: dataValues
+        content: dataValues,
     });
 }
 

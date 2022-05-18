@@ -49,7 +49,7 @@ todo:   create 'views' folder w/ corresponding handlebars files for each route i
 /* Import Environment Variables */
 /* ---------------------------- */
 require('dotenv').config();
-    
+
 /* -------------- */
 /* Import Modules */
 /* -------------- */
@@ -81,6 +81,7 @@ app.set('view engine', 'handlebars');
 /* ------------ */
 /* Start Server */
 /* ------------ */
+
 sequelizeConnection.sync({ force: DB_RESET_ON_LOAD }).then(() => {
     app.listen(PORT, err => {
         if (err) throw err;
