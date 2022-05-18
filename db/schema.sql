@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS greenhive_db;
+CREATE DATABASE greenhive_db;

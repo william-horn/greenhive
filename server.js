@@ -11,7 +11,7 @@
 
 ? @doc-name:            server.js
 ? @doc-created:         05/17/2022
-? @doc-modified:        05/17/2022
+? @doc-modified:        05/18/2022
 
 ==================================================================================================================================
 
@@ -30,8 +30,11 @@ framework to operate. learn more about Express.js here: https://expressjs.com/
 | DOCUMENT TODO |
 ==================================================================================================================================
 
-todo:   add sequelize connection and sync it with server -Will [05/17/2022]
+todo:   create session data for preserving login info
         !Incomplete
+
+todo:   add sequelize connection and sync it with server -Will [05/17/2022]
+        *Completed -Will [05/18/2022]
 
 todo:   import express-handlebars and set-up middleware -Will [05/17/2022]
         *Completed -Will [05/17/2022]
@@ -46,11 +49,12 @@ todo:   create 'views' folder w/ corresponding handlebars files for each route i
 /* Import Environment Variables */
 /* ---------------------------- */
 require('dotenv').config();
-
+    
 /* -------------- */
 /* Import Modules */
 /* -------------- */
 const express = require('express');
+const sequelizeConnection = require('./config/sequelizeConnection');
 const { engine: renderEngine } = require('express-handlebars');
 const routes = require('./controllers');
 
@@ -60,6 +64,7 @@ const routes = require('./controllers');
 // app set-up
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DB_RESET_ON_LOAD = process.env.DB_RESET_ON_LOAD === 'true';
 
 // app middleware/network
 app.use(express.json());                        // allow requests to accept json 
@@ -76,7 +81,17 @@ app.set('view engine', 'handlebars');
 /* ------------ */
 /* Start Server */
 /* ------------ */
-app.listen(PORT, err => {
-    if (err) throw err;
-    console.log('Server running on port:', PORT);
+sequelizeConnection.sync({ force: DB_RESET_ON_LOAD }).then(() => {
+    app.listen(PORT, err => {
+        if (err) throw err;
+        console.log('Server running on port:', PORT);
+    });
+
+    // seed the database (test code)
+    if (DB_RESET_ON_LOAD) {
+        require('./models/User').bulkCreate([
+            { username: 'test_user_0' },
+            { username: 'test_user_1' },
+        ]);
+    }
 });
