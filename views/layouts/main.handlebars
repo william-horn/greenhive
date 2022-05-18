@@ -1,28 +1,89 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Css Library-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!--Font Awesome-->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
- <html>
-     <head>
-        <!-- metadata -->
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <meta name="author" content="GreenHive"/>
-        <meta name="description" content="A good community-driven platform for environmentalists who want to take part in keeping the Earth clean"/>
+    <!--Google Fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,700&family=Montserrat:wght@400;700&family=Sacramento&family=Ubuntu:ital,wght@0,300;1,500&display=swap" 
+      rel="stylesheet"
+    />
+    <!--Link to StyleSheet-->
+    <link 
+      rel="stylesheet" 
+      href="/css/style.css" 
+    />
+    <!--Title of the webpage-->
+    <title>Protect Wildlife</title>
+  </head>
+  <!-- header/application title -->
+  <header class="navbar has-background-warning" role="navigation" aria-label="main navigation">
+    <h1 class="navbar-brand is-size-1">
+      <a id="top">GreenHive</a>
+    </h1>
+    <!-- nav bar -->
+    <nav>
+      <ul class="navbar-start">
+        <li><a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet " href="#Home">Home</a></li>
+        <li><a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet" href="#Aboutus">About Us</a></li>
+        <li>
+          <a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet " href="#Login">Login</a>
+        </li>
+        <li><a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet" href="#contacts">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        <!-- dynamic title -->
-        <title>{{pageTitle}}</title>
+  <body>
+  <!-- hero section -->
+  <section class="hero is-medium is-warning hero-background-image">
+    <div class="hero-cta">
+      <h2>Protect our earth</h2>
+      <p>
+        seitan heirloom post-ironic pop-up iPhone mlkshk hella selfies fashion axe occupy readymade put a bird on it messenger bag Wes Anderson Schlitz plaid Bushwick church-key lo-fi skateboard slow-carb hashtag trust fund Williamsburg biodiesel fixie farm-to-table 8-bit banjo XOXO Banksy chillwave bicycle rights retro cliche tattooed bespoke irony mumblecore Shoreditch deep v polaroid McSweeney's bitters cray gentrify tofu Marfa you probably haven't heard of them yr banh mi asymmetrical art party selvage letterpress High Life.
+      </p>
+    </div>
+  </section>
 
-        <!-- import Bulma -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"/>
+  <!--main-section-->
+  <section id="Aboutus" class="intro">
+    <div class="flex-row">
+      <h2 class="title">About Us</h2>
+    </div>
+    <div class="flex-row">
+      <p>
+        butcher selfies chambray shabby chic gentrify readymade yr Echo Park XOXO Tumblr normcore Banksy direct trade Blue Bottle chillwave you probably haven't heard of them single-origin coffee Vice fanny pack fixie Odd Future Austin fingerstache pickled twee synth Wes Anderson Thundercats viral bitters flannel meggings narwhal Marfa Schlitz sustainable Intelligentsia umami deep v craft
+      </p>
+    </div>
+  </section>
 
-        {{!-- link dynamic css --}}
-        {{!-- .todo: find better way to link css files -Will [05/17/2022] --}}
-        {{!-- {{#if (lookup . 'CSSLoader')}}
-            {{> (lookup . 'CSSLoader')}}
-        {{/if}} --}}
-    </head>
-    
-    <body>
-        {{{body}}}
-    </body>
-</html>
+  <!--Footer-->
+  <footer id="contacts" class="has-text-centered has-background-link-light">
+    <h2> 🧡Made with love by GreenHive.</h2>
+    <div>
+      
+      &copy; 2022 GreenHive, Inc.
+    </div>
+  </footer>
+  </body>
+</html>  
+
