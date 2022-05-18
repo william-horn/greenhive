@@ -3,7 +3,7 @@
 | SERVER |
 ==================================================================================================================================
 
-? @contributors:        
+? @collaborators:        
                         * Aswathy Ajesh
                         * Jordan Weston
                         * Allen Bey
@@ -31,8 +31,13 @@ framework to operate. learn more about Express.js here: https://expressjs.com/
 ==================================================================================================================================
 
 todo:   add sequelize connection and sync it with server -Will [05/17/2022]
+        !Incomplete
+
 todo:   import express-handlebars and set-up middleware -Will [05/17/2022]
+        *Completed -Will [05/17/2022]
+
 todo:   create 'views' folder w/ corresponding handlebars files for each route in 'controllers' -Will [05/17/2022]
+        *Completed -Will [05/17/2022]
 
 ==================================================================================================================================
 */
