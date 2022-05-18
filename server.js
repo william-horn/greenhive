@@ -55,15 +55,18 @@ require('dotenv').config();
 /* -------------- */
 const express = require('express');
 const sequelizeConnection = require('./config/sequelizeConnection');
-const { engine: renderEngine } = require('express-handlebars');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const expressHbs = require('express-handlebars');
 const routes = require('./controllers');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_RESET_ON_LOAD = process.env.DB_RESET_ON_LOAD === 'true';
 
-const sequelize = require('./config/connection.js');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
+app.use(express.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(routes);
 
 const sess = {
   secret: 'Super secret secret',
@@ -71,15 +74,12 @@ const sess = {
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
-    db: sequelize
+    db: sequelizeConnection
   })
 };
 
 app.use(session(sess));
-
-const hbs = exphbs.create({ helpers });
-
-app.engine('handlebars', hbs.engine);
+app.engine('handlebars', expressHbs.create({ helpers }).engine);
 app.set('view engine', 'handlebars');
 
 /* ------------ */
