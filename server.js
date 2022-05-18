@@ -58,24 +58,28 @@ const sequelizeConnection = require('./config/sequelizeConnection');
 const { engine: renderEngine } = require('express-handlebars');
 const routes = require('./controllers');
 
-/* --------------------------------- */
-/* Application Set-Up and Middleware */
-/* --------------------------------- */
-// app set-up
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_RESET_ON_LOAD = process.env.DB_RESET_ON_LOAD === 'true';
 
-// app middleware/network
-app.use(express.json());                        // allow requests to accept json 
-app.use(express.static('public'));              // front-end file system
-app.use(express.urlencoded({extended: true}));  // allow for nested objects in body requests
+const sequelize = require('./config/connection.js');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-// internal routes
-app.use(routes);
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  })
+};
 
-// render engine
-app.engine('handlebars', renderEngine());
+app.use(session(sess));
+
+const hbs = exphbs.create({ helpers });
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 /* ------------ */
