@@ -6,17 +6,9 @@ const User = require('../models/User');
     
     Respond to all GET requests given the route to the homepage.
 */
-const GET_root = async (req, res) => {
-    const rawData = await User.findAll();
-
-    const dataValues = [];
-    rawData.forEach(item => dataValues.push(item.dataValues));
-
-    res.render('home', {
-        pageTitle: 'Home',
-        content: dataValues,
-    });
-}
+const GET_root = async (req, res) => res.render('home', {
+    pageTitle: 'Home',
+});
 
 // set routes
 router
