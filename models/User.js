@@ -13,6 +13,14 @@ User.init({
     username: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    page_visits: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     sequelize: sequelizeConnection,
@@ -22,7 +30,5 @@ User.init({
     underscored: true,
     timestamps: false
 });
-
-console.log('user model was created');
 
 module.exports = User;
