@@ -4,28 +4,22 @@
     <div class="hero-body columns is-3">
         <div class="column">
             <div class="card p-6 has-background-light">
-
-                <h2 class="card-header-title is-size-3 is-italic has-text-centered">{{pageTitle}}</h2>
-                <div class="card-content is-size-5 has-text-weight-semibold"><body>
-                    <form action="/url" method="GET">
+                <h2 class="card-header-title is-size-3 is-italic has-text-centered">{{registerText}}</h2>
+                <div class="card-content is-size-5 has-text-weight-semibold">
+                    <div>
                         <p>Username:</p>
                         <input type="text" id="username-input">
-                    </form>
+                    </div>
 
-                    <form action="/url" method="GET">
+                    <div action="/url" method="GET">
                         <p>Password:</p>
                         <input type="text" id="password-input">
-                    </form>
+                    </div>
 
-                    <div class="form-group">
-                    <button class="btn button is-primary" type="submit" id="register-btn">{{pageTitle}}</button>
-                    {{#if login}}
-                        <script src="./js/login.js"></script>
-                        <a type="button" href="/signup">Sign up</a>
-                    {{else}}
-                        <script src="./js/signup.js"></script>
-                        <a type="button" href="/signup">Login</a>
-                    {{/if}}
+                    <button class="btn button is-primary" type="submit" id="register-btn" data-register-variant="{{registerVariant}}">{{registerText}}</button>
+                    <a type="button" href="/register?variant={{altRegisterVariant}}">{{altRegisterText}}</a>
+
+                    <script src="./js/register.js"></script>
                 </div>
             </div> 
         </div>

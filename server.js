@@ -5,13 +5,12 @@
 
 ? @collaborators:        
                         * Aswathy Ajesh
-                        * Jordan Weston
                         * Allen Bey
                         * William Horn
 
 ? @doc-name:            server.js
 ? @doc-created:         05/17/2022
-? @doc-modified:        05/18/2022
+? @doc-modified:        05/19/2022
 
 ==================================================================================================================================
 
@@ -23,6 +22,8 @@
 This program file is responsible for handling the initialization of all back-end functionality and uses the Express.js server
 framework to operate. learn more about Express.js here: https://expressjs.com/
 
+Database management is handled by the Sequelize ORM library.
+
 ==================================================================================================================================
 
 ? @doc-todo
@@ -31,7 +32,7 @@ framework to operate. learn more about Express.js here: https://expressjs.com/
 ==================================================================================================================================
 
 todo:   create session data for preserving login info
-        !Incomplete
+        *Completed -Aswathy [05/18/2022]
 
 todo:   add sequelize connection and sync it with server -Will [05/17/2022]
         *Completed -Will [05/18/2022]
@@ -45,14 +46,13 @@ todo:   create 'views' folder w/ corresponding handlebars files for each route i
 ==================================================================================================================================
 */
 
-/* ---------------------------- */
-/* Import Environment Variables */
-/* ---------------------------- */
-require('dotenv').config();
-
 /* -------------- */
 /* Import Modules */
 /* -------------- */
+// one-off's
+require('dotenv').config();
+
+// modules
 const express = require('express');
 const sequelizeConnection = require('./config/sequelizeConnection');
 const expressSession = require('express-session');
@@ -68,12 +68,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_RESET_ON_LOAD = process.env.DB_RESET_ON_LOAD === 'true';
 
+// global middleware
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(routes);
 
-const sessionData = {
+app.use(expressSession({
   secret: 'Super secret secret',
   cookie: {},
   resave: false,
@@ -81,9 +81,12 @@ const sessionData = {
   store: new SequelizeStore({
     db: sequelizeConnection
   })
-};
+}));
 
-app.use(expressSession(sessionData));
+// routes should be the last middleware called
+app.use(routes);
+
+// app view engine
 app.engine('handlebars', expressHbs.create({ helpers }).engine);
 app.set('view engine', 'handlebars');
 
@@ -99,8 +102,8 @@ sequelizeConnection.sync({ force: DB_RESET_ON_LOAD }).then(() => {
     // seed the database (test code)
     if (DB_RESET_ON_LOAD) {
         require('./models/User').bulkCreate([
-            { username: 'test_user_0' },
-            { username: 'test_user_1' },
+            { username: 'test_user_0', password: 'test123' },
+            { username: 'test_user_1', password: 'test123' },
         ]);
     }
 });
