@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../models/User');
-const helpers = require('../utils/helpers');
 
 /*
     function: GET_ROOT
@@ -8,13 +7,12 @@ const helpers = require('../utils/helpers');
     Respond to all GET requests given the route to the homepage.
 */
 const GET_root = async (req, res) => {
-    const registerVariant = req.session.isLoggedIn ? 'logout' : 'login';
-    const registerText = helpers.renderRegisterText(registerVariant);
+    const isLoggedIn = req.session.isLoggedIn;
+    const registerVariant = isLoggedIn ? 'logout' : 'login';
 
     res.render('home', {
         registerVariant,
-        registerText,
-        pageTitle: 'Home',
+        pageTitle: 'home',
     })
 };
 

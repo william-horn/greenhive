@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../models/User');
-const helpers = require('../utils/helpers');
 
 /*
     function: GET_root
@@ -19,8 +18,6 @@ const helpers = require('../utils/helpers');
 */
 const GET_root = (req, res) => {
     const registerVariant = req.query.variant || 'login'; // login | signup | logout
-    // rendered text
-    const registerText = helpers.renderRegisterText(registerVariant);
 
     // logout request
     if (registerVariant === 'logout') {
@@ -28,18 +25,14 @@ const GET_root = (req, res) => {
 
         return res.render('home', {
             registerVariant: 'login',
-            registerText: 'Login',
-            pageTitle: 'Home',
+            pageTitle: 'home',
         });
     }
 
     // render login or signup page depending on 'registerVariant'
     res.render('register', {
-        registerVariant,               
-        registerText,
-        altRegisterVariant: helpers.getAltRegisterVariant(registerVariant),          
-        altRegisterText: helpers.renderAltRegisterText(registerVariant),  
-        pageTitle: registerText    
+        registerVariant,                        
+        pageTitle: registerVariant    
     });
 }
 
@@ -72,7 +65,8 @@ const POST_root = async (req, res) => {
     // begin to create new user account
     User.create({
         username: userData.username,
-        password: userData.password
+        password: userData.password,
+        page_visits: 1
     });
 
     req.session.isLoggedIn = true;

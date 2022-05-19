@@ -74,7 +74,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(expressSession({
-  secret: 'Super secret secret',
+  secret: 'xcj90p74uhgft8dgazs',
   cookie: {},
   resave: false,
   saveUninitialized: true,
@@ -102,8 +102,8 @@ sequelizeConnection.sync({ force: DB_RESET_ON_LOAD }).then(() => {
     // seed the database (test code)
     if (DB_RESET_ON_LOAD) {
         require('./models/User').bulkCreate([
-            { username: 'test_user_0', password: 'test123' },
-            { username: 'test_user_1', password: 'test123' },
+            { username: 'test_user_0', password: 'test123', page_visits: 1 },
+            { username: 'test_user_1', password: 'test123', page_visits: 1 },
         ]);
     }
 });

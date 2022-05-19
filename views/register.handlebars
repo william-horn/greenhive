@@ -4,7 +4,7 @@
     <div class="hero-body columns is-3">
         <div class="column">
             <div class="card p-6 has-background-light">
-                <h2 class="card-header-title is-size-3 is-italic has-text-centered">{{registerText}}</h2>
+                <h2 class="card-header-title is-size-3 is-italic has-text-centered">{{getRegisterVariantAlias registerVariant 'rendered'}}</h2>
                 <div class="card-content is-size-5 has-text-weight-semibold">
                     <div>
                         <p>Username:</p>
@@ -16,8 +16,17 @@
                         <input type="text" id="password-input">
                     </div>
 
-                    <button class="btn button is-primary" type="submit" id="register-btn" data-register-variant="{{registerVariant}}">{{registerText}}</button>
-                    <a type="button" href="/register?variant={{altRegisterVariant}}">{{altRegisterText}}</a>
+                    <button 
+                    class="btn button is-primary" 
+                    type="submit" 
+                    id="register-btn" 
+                    data-register-variant="{{registerVariant}}">
+                        {{getRegisterVariantAlias registerVariant 'rendered'}}
+                    </button>
+
+                    {{#with (getRegisterVariantAlias registerVariant 'alts')}}
+                        <a type="button" href="/register?variant={{routes.[0]}}">{{render.[0]}}</a>
+                    {{/with}}
 
                     <script src="./js/register.js"></script>
                 </div>

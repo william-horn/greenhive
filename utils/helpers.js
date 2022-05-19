@@ -1,17 +1,33 @@
-const renderedRegisterVariantAliases = {
-  'login': 'Login',
-  'logout': 'Logout',
-  'signup': 'Sign Up'
+
+const registerVariantAliases = {
+  'login': {
+    rendered: 'Login',
+    alts: {
+      routes: ['signup', 'logout'], 
+      render: ['Sign Up', 'Logout']
+    }
+  },
+  'logout': {
+    rendered: 'Logout',
+    alts: {
+      routes: ['login'], 
+      render: ['Login']
+    }
+  },
+  'signup': {
+    rendered: 'Sign Up',
+    alts: {
+      routes: ['login'], 
+      render: ['Login']
+    }
+  }
 }
 
-const renderedRegisterAntiAliases = {
-  'login': 'Sign Up',
-  'signup': 'Login'
-}
-
-const registerAntiAliases = {
-  'login': 'signup',
-  'signup': 'login'
+const pageTitleAliases = {
+  'login': registerVariantAliases.login.rendered,
+  'logout': registerVariantAliases.logout.rendered,
+  'signup': registerVariantAliases.signup.rendered,
+  'home': 'Home'
 }
 
 module.exports = {
@@ -23,9 +39,8 @@ module.exports = {
         new Date(date).getFullYear() 
       }`;
     },
-    renderRegisterText: variant => renderedRegisterVariantAliases[variant],
-    renderAltRegisterText: variant => renderedRegisterAntiAliases[variant],
-    getAltRegisterVariant: variant => registerAntiAliases[variant],
+    getRegisterVariantAlias: (variant, index) => registerVariantAliases[variant][index],
+    getPageTitle: variant => pageTitleAliases[variant] || variant,
     not: value => !value,
   };
   

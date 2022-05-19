@@ -17,6 +17,10 @@ User.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    page_visits: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     sequelize: sequelizeConnection,
