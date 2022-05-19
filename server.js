@@ -55,10 +55,15 @@ require('dotenv').config();
 /* -------------- */
 const express = require('express');
 const sequelizeConnection = require('./config/sequelizeConnection');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const expressSession = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(expressSession.Store);
 const expressHbs = require('express-handlebars');
 const routes = require('./controllers');
+const helpers = require('./utils/helpers');
 
+/* ------------------------- */
+/* App Set-Up and Middleware */
+/* ------------------------- */
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_RESET_ON_LOAD = process.env.DB_RESET_ON_LOAD === 'true';
@@ -68,7 +73,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
-const sess = {
+const sessionData = {
   secret: 'Super secret secret',
   cookie: {},
   resave: false,
@@ -78,14 +83,13 @@ const sess = {
   })
 };
 
-app.use(session(sess));
+app.use(expressSession(sessionData));
 app.engine('handlebars', expressHbs.create({ helpers }).engine);
 app.set('view engine', 'handlebars');
 
 /* ------------ */
 /* Start Server */
 /* ------------ */
-
 sequelizeConnection.sync({ force: DB_RESET_ON_LOAD }).then(() => {
     app.listen(PORT, err => {
         if (err) throw err;
