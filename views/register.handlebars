@@ -9,16 +9,16 @@
                 <div class="card-content is-size-5 has-text-weight-semibold"><body>
                     <form action="/url" method="GET">
                         <p>Username:</p>
-                        <input type="text">
+                        <input type="text" id="username-input">
                     </form>
 
                     <form action="/url" method="GET">
                         <p>Password:</p>
-                        <input type="text">
+                        <input type="text" id="password-input">
                     </form>
 
                     <div class="form-group">
-                    <button class="btn button is-primary" type="submit" id="login-btn">{{pageTitle}}</button>
+                    <button class="btn button is-primary" type="submit" id="register-btn">{{pageTitle}}</button>
                     {{#if login}}
                         <script src="./js/login.js"></script>
                         <a type="button" href="/signup">Sign up</a>
