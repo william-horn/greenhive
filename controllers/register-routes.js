@@ -31,8 +31,15 @@ login and signup validation, webpage rendering, and other miscellaneous requests
 /* Import modules */
 /* -------------- */
 const router = require('express').Router();
-const { getPasswordErrorMessage } = require('../aliases/password-messages');
 const User = require('../models/User');
+
+const { 
+    errorMessages,
+    successMessages,
+    infoMessages,
+    getPasswordErrorMessage,
+    getAccountConfirmationMessage
+} = require('../aliases/response-messages');
 
 /*
     Custom middleware for '/register' routes. This middleware just adds a 'registerVariant' property to
@@ -135,8 +142,8 @@ const POST_root_signup = async (req, res) => {
         */
         req.session.isLoggedIn = true;
         res.status(200).json({
-            message: 'Signup successful',
-            report: 'Created new account: ' + userData.username
+            message: successMessages.signupSuccess,
+            report: getAccountConfirmationMessage(userData.username)
         });
 
         /*
@@ -145,7 +152,7 @@ const POST_root_signup = async (req, res) => {
         */
     } catch(err) {
         res.status(500).json({
-            message: 'Password failure',
+            message: errorMessages.signupPasswordFailed,
             report: getPasswordErrorMessage(err),
         });
     }
@@ -187,8 +194,8 @@ const POST_root_login = async (req, res, next) => {
         */
         if (!existingUser) {
             return res.status(500).json({
-                message: 'Login failed',
-                report: 'Login credentials do not exist'
+                message: errorMessages.loginFailed,
+                report: errorMessages.loginUsernameFailed
             });
         }
 
@@ -203,8 +210,7 @@ const POST_root_login = async (req, res, next) => {
             console.log(`User: ${existingUser.username} has successfully logged in`);
 
             return res.status(200).json({
-                message: 'Login successful',
-                report: 'User successfully logged in'
+                message: successMessages.loginSuccess,
             });
         }
 
@@ -213,8 +219,8 @@ const POST_root_login = async (req, res, next) => {
         that account and we will send them a server error.
         */
         return res.status(500).json({ 
-            message: 'Login failed',
-            report: 'Wrong password'
+            message: errorMessages.loginFailed,
+            report: errorMessages.loginPasswordFailed
         });
     }
 
@@ -225,8 +231,8 @@ const POST_root_login = async (req, res, next) => {
     */
     if (existingUser) {
         return res.status(500).json({
-            message: 'Sign Up failed',
-            report: 'This account already exists'
+            message: errorMessages.signupFailed,
+            report: errorMessages.signupUsernameFailed
         });
     }
 
