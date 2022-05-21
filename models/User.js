@@ -33,7 +33,6 @@ User.init({
 }, {
     sequelize: sequelizeConnection,
     modelName: 'user',
-    tableName: 'users',
     freezeTableName: true,
     underscored: true,
     timestamps: false
