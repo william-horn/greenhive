@@ -14,6 +14,12 @@ const GET_root = async (req, res) => {
         registerVariant,
         pageTitle: 'home',
     })
+
+    // increase player 'page_visits' by one for each homepage load
+    // await User.increment('page_visits', { 
+    //     by: 1, 
+    //     where: { id: 'model_id' }
+    // });
 };
 
 // set routes

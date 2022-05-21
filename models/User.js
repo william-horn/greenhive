@@ -12,11 +12,19 @@ User.init({
     },
     username: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: { 
+            len: [3, 25], 
+            notEmpty: true
+        }
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [5, 30], 
+            notEmpty: true 
+        }
     },
     page_visits: {
         type: DataTypes.INTEGER,

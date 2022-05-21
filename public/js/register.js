@@ -7,11 +7,11 @@ const registerVariant = registerBtn.dataset.registerVariant;
 
 // login/signup behavior
 const onLogin = data => {
-    console.log('is login screen');
+    console.log('Passed login validation');
 }
 
 const onSignUp = data => {
-    console.log('is sign up screen');
+    console.log('Pass signup validation');
 }
 
 const registerFunction = registerVariant === 'login'
@@ -37,11 +37,13 @@ const onRegister = async (event) => {
     }
 
     // send user data as a login or signup register variant
+    // send route /register?variant=login
+    // or send route /register?variant=signup
     const response = await fetch('/register?variant=' + registerVariant, requestMetadata);
     const data = await response.json();
 
     if (response.ok) {
-        //location.replace('/profile');
+        location.replace('/');
     }
 
     registerFunction(data);
