@@ -31,6 +31,7 @@ login and signup validation, webpage rendering, and other miscellaneous requests
 /* Import modules */
 /* -------------- */
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 const { 
@@ -46,7 +47,7 @@ const {
     the request object, which parses the url for the 'variant' query parameter. Effectively turning this:
         /register?variant=something
     into this:
-        req.registerVariant = 'something'
+        req.session.registerVariant = 'something'
 */
 const setRegisterVariant = (req, res, next) => {
     const registerVariant = req.query.variant || 'login'; // login | signup | logout
@@ -94,7 +95,7 @@ const GET_root = (req, res) => {
 
     /*
     if the user is logged in then send them back to the homepage to prevent the
-    ability to login multiple times, which doesn't make any sense
+    ability to login multiple times
     */
     if (req.session.isLoggedIn) {
         return res.redirect('/');
@@ -102,7 +103,7 @@ const GET_root = (req, res) => {
 
     /* 
     by this point the user is permitted to login or signup, and the
-    webpages for those forms will be sent to the client
+    webpages for those forms will be sent to the client.
     */
     res.render('register', {
         registerVariant,                        
@@ -151,6 +152,7 @@ const POST_root_signup = async (req, res) => {
         a server error back to the client
         */
     } catch(err) {
+        console.log('ERROR:', err);
         res.status(500).json({
             message: errorMessages.signupPasswordFailed,
             report: getPasswordErrorMessage(err),
@@ -205,8 +207,11 @@ const POST_root_login = async (req, res, next) => {
         will send an ok response and user will be directed back to whatever page the 
         front-end code sends them to
         */
-        if (existingUser.password === userData.password) {
+        if (await bcrypt.compare(userData.password, existingUser.password)) {
+            // session data
             req.session.isLoggedIn = true;
+            req.session.userId = existingUser.id;
+
             console.log(`User: ${existingUser.username} has successfully logged in`);
 
             return res.status(200).json({

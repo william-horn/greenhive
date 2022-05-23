@@ -1,9 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 const sequelizeConnection = require('../config/sequelizeConnection');
 
-class User extends Model {}
-
-User.init({
+const User = sequelizeConnection.define('user', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -30,12 +29,17 @@ User.init({
         type: DataTypes.INTEGER,
         allowNull: false
     }
-}, {
+},
+{
     sequelize: sequelizeConnection,
     modelName: 'user',
     freezeTableName: true,
     underscored: true,
     timestamps: false
+});
+
+User.beforeCreate(async user => {
+    user.password = await bcrypt.hash(user.password, 10);
 });
 
 module.exports = User;

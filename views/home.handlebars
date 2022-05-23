@@ -16,6 +16,7 @@
         <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet " href="#Home">Home</a></li>
         <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet" href="#Aboutus">About Us</a></li>
         {{#if isLoggedIn}}
+            {{!-- todo: make the 'My Profile' button have a different hover effect that changes text color instead of background color --}}
             <img id="profile-icon" class="profile-icon is-rounded" src="./images/profile-img-test-2.jpg">
             <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet" style="color: #8eb570 !important; text-decoration: underline;" href="/profile">My Profile</a></li>
         {{/if}}

@@ -93,17 +93,67 @@ app.set('view engine', 'handlebars');
 /* ------------ */
 /* Start Server */
 /* ------------ */
-sequelizeConnection.sync({ force: DB_RESET_ON_LOAD }).then(() => {
+
+/*
+  EXPERIMENTAL SEED CODE
+
+  The purpose of this code is just to test database queries. This should not be here
+  in production.
+*/
+const plantSeeds = async () => {
+  const User = require('./models/User');
+  const Post = require('./models/Post');
+
+  await User.bulkCreate([
+      { username: 'test_user_0', password: 'test123', page_visits: 1 },
+      { username: 'test_user_1', password: 'test123', page_visits: 1 },
+  ]);
+
+  const makeUserPost = data => {
+    return Post.create(data);
+  }
+
+  const getAllUserPosts = userId => {
+    return Post.findAll({ where: { author_id: userId }});
+  }
+
+  await makeUserPost({
+    author_id: 1, 
+    author_name: 'test_user_0',
+    title: 'ocean help', 
+    content: 'ocean is ded pls help'
+  });
+
+  await makeUserPost({
+    author_id: 1, 
+    author_name: 'test_user_0',
+    title: 'something else', 
+    content: 'idek'
+  });
+
+  await makeUserPost({
+    author_id: 2, 
+    author_name: 'test_user_1',
+    title: 'trees', 
+    content: 'something something rainforest'
+  });
+
+
+  const userPosts = await getAllUserPosts(2);
+}
+
+/*
+  EXPERIMENTAL CODE END
+*/
+
+sequelizeConnection.sync({ force: DB_RESET_ON_LOAD })
+  .then(() => {
     app.listen(PORT, err => {
         if (err) throw err;
         console.log('Server running on port:', PORT);
     });
-
+  })
+  .then(() => {
     // seed the database (test code)
-    if (DB_RESET_ON_LOAD) {
-        require('./models/User').bulkCreate([
-            { username: 'test_user_0', password: 'test123', page_visits: 1 },
-            { username: 'test_user_1', password: 'test123', page_visits: 1 },
-        ]);
-    }
-});
+    if (DB_RESET_ON_LOAD) plantSeeds();
+  });
