@@ -13,4 +13,8 @@ const sequelizeConnection = process.env.JAWSDB_URL
         });
 
 module.exports = sequelizeConnection;
-require('../models').loadTables(); // preload all models
+
+/*
+  Preload and initialize all models after sequelize connection is established
+*/
+require('../models');

@@ -10,8 +10,11 @@ const GET_root = async (req, res) => {
     const isLoggedIn = req.session.isLoggedIn;
     const registerVariant = isLoggedIn ? 'logout' : 'login';
 
+    console.log('loaded home page');
+
     res.render('home', {
         registerVariant,
+        isLoggedIn: isLoggedIn,
         pageTitle: 'home',
     })
 

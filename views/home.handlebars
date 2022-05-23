@@ -1,21 +1,26 @@
 {{!-- local css styles go here --}}
 <link 
     rel="stylesheet" 
-    href="./css/home-style.css" 
+    href="./css/home.css" 
 />
 
 <!-- header/application title -->
-<header class="navbar has-background-warning" role="navigation" aria-label="main navigation">
+<header class="navbar" role="navigation" aria-label="main navigation">
     <h1 class="navbar-brand is-size-1">
-        <a id="top">GreenHive</a>
+        {{!-- <a id="top">GreenHive</a> --}}
+        <img class="logo-img" src="./images/greenhive-logo.png">GreenHive
     </h1>
     <!-- nav bar -->
     <nav>
         <ul class="navbar-start">
-        <li><a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet " href="#Home">Home</a></li>
-        <li><a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet" href="#Aboutus">About Us</a></li>
-        <li><a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet " href="/register?variant={{registerVariant}}">{{getRegisterVariantAlias registerVariant 'rendered'}}</a></li>
-        <li><a class="navbar-item has-text-grey-darker has-text-weight-semibold is-size-3-mobile is-size-3-tablet" href="#contacts">Contact</a></li>
+        <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet " href="#Home">Home</a></li>
+        <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet" href="#Aboutus">About Us</a></li>
+        {{#if isLoggedIn}}
+            <img id="profile-icon" class="profile-icon is-rounded" src="./images/profile-img-test-2.jpg">
+            <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet" style="color: #8eb570 !important; text-decoration: underline;" href="/profile">My Profile</a></li>
+        {{/if}}
+        <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet " href="/register?variant={{registerVariant}}">{{getRegisterVariantAlias registerVariant 'rendered'}}</a></li>
+        <li><a class="navbar-item has-text-weight-semibold is-size-6-mobile is-size-4-tablet" href="#contacts">Contact</a></li>
         </ul>
     </nav>
 </header>
@@ -23,7 +28,7 @@
 <!-- hero section -->
 <section class="hero is-medium is-warning hero-background-image">
     <div class="hero-cta">
-        <h2>Protect our earth</h2>
+        <h2 class="heading-title">Protect our earth</h2>
         <p>
         seitan heirloom post-ironic pop-up iPhone mlkshk hella selfies fashion axe occupy readymade put a bird on it messenger bag Wes Anderson Schlitz plaid Bushwick church-key lo-fi skateboard slow-carb hashtag trust fund Williamsburg biodiesel fixie farm-to-table 8-bit banjo XOXO Banksy chillwave bicycle rights retro cliche tattooed bespoke irony mumblecore Shoreditch deep v polaroid McSweeney's bitters cray gentrify tofu Marfa you probably haven't heard of them yr banh mi asymmetrical art party selvage letterpress High Life.
         </p>
@@ -33,7 +38,7 @@
 <!--main-section-->
 <section id="Aboutus" class="intro">
     <div class="flex-row">
-        <h2 class="title">About Us</h2>
+        <h2 class="title heading-title">About Us</h2>
     </div>
     <div class="flex-row">
         <p>
@@ -43,8 +48,8 @@
 </section>
 
 <!--Footer-->
-<footer id="contacts" class="has-text-centered has-background-link-light">
-    <h2> 🧡Made with love by GreenHive.</h2>
+<footer id="contacts" class="has-text-centered">
+    <h2> Brought to you by GreenHive.</h2>
     <div>
         &copy; 2022 GreenHive, Inc.
     </div>

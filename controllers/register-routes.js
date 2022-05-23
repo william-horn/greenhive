@@ -85,16 +85,16 @@ const GET_root = (req, res) => {
     */
     if (registerVariant === 'logout') {
         req.session.isLoggedIn = false;
-
-        return res.render('home', {
-            registerVariant: 'login',
-            pageTitle: 'home',
-        });
+        return res.redirect('/');
+        // return res.render('home', {
+        //     registerVariant: 'login',
+        //     pageTitle: 'home',
+        // });
     }
 
     /*
     if the user is logged in then send them back to the homepage to prevent the
-    ability to login multiple times -- which doesn't make any sense
+    ability to login multiple times, which doesn't make any sense
     */
     if (req.session.isLoggedIn) {
         return res.redirect('/');

@@ -8,11 +8,4 @@
     -Will
 */
 
-const loadTables = () => {
-    require('./User');
-}
-
-module.exports = {
-    loadTables
-}
-
+const User = require('./User');

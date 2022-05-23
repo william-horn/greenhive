@@ -1,27 +1,15 @@
 
 // get register button (login/signup)
 const registerBtn = document.getElementById('register-btn');
+const registerContainer = document.getElementById('register-container');
 
 // initialize register data
-const registerVariant = registerBtn.dataset.registerVariant;
-
-// login/signup behavior
-const onLogin = data => {
-    console.log('Passed login validation');
-}
-
-const onSignUp = data => {
-    console.log('Pass signup validation');
-}
-
-const registerFunction = registerVariant === 'login'
-    ? onLogin
-    : onSignUp;
+const registerVariant = registerContainer.dataset.registerVariant;
 
 // generic register button click event
 const onRegister = async (event) => {
-    const usernameBox = document.getElementById('username-input');
-    const passwordBox = document.getElementById('password-input');
+    const usernameBox = document.getElementById('username-box');
+    const passwordBox = document.getElementById('password-box');
 
     // get username and password fields
     const userData = {
@@ -46,7 +34,6 @@ const onRegister = async (event) => {
         location.replace('/');
     }
 
-    registerFunction(data);
     console.log('Recieved from server:', data);
 }
 

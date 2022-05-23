@@ -1,0 +1,14 @@
+
+* {
+    /* border: 1px solid red !important; */
+}
+
+:root {
+    /* --themePrimaryBackgroundColor: #1f1a07; */
+    /* --themePrimaryBackgroundColor: #3d361d; */
+    /* --themePrimaryBackgroundColor: #29261a; */
+    --themePrimaryBackgroundColor: #354532;
+    --themeSecondaryBackgroundColor: #111007;
+    --themeHeadingTextColor: #625d42;
+    --themeBrandnameColor: #5b7c5a;
+}

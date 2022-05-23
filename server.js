@@ -83,7 +83,7 @@ app.use(expressSession({
   })
 }));
 
-// routes should be the last middleware called
+// routes should be the last middleware provided so it has access to all other middleware
 app.use(routes);
 
 // app view engine
