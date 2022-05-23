@@ -55,6 +55,7 @@ require('dotenv').config();
 // modules
 const express = require('express');
 const sequelizeConnection = require('./config/sequelizeConnection');
+const models = require('./models'); // initialize all database tables
 const expressSession = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(expressSession.Store);
 const expressHbs = require('express-handlebars');
@@ -101,8 +102,8 @@ app.set('view engine', 'handlebars');
   in production.
 */
 const plantSeeds = async () => {
-  const User = require('./models/User');
-  const Post = require('./models/Post');
+  const User = models.User;
+  const Post = models.Post;
 
   await User.bulkCreate([
       { username: 'test_user_0', password: 'test123', page_visits: 1 },

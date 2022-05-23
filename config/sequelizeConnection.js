@@ -13,8 +13,3 @@ const sequelizeConnection = process.env.JAWSDB_URL
         });
 
 module.exports = sequelizeConnection;
-
-/*
-  Preload and initialize all models after sequelize connection is established
-*/
-require('../models');

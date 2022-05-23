@@ -1,13 +1,13 @@
 const router = require('express').Router();
 
-/*
-    function: GET_ROOT
-    
-    Respond to all GET requests given the route to the homepage.
-*/
+// todo: add comment
 const GET_root = async (req, res) => {
     const isLoggedIn = req.session.isLoggedIn;
 
+    /*
+    if the user is logged in then bring them to their profile page, otherwise
+    redirect them to the login screen
+    */
     if (isLoggedIn) {
         res.render('profile', {
             pageTitle: 'Profile',
@@ -17,7 +17,6 @@ const GET_root = async (req, res) => {
     }
 };
 
-// set routes
 router
     .route('/')
     .get(GET_root)

@@ -65,6 +65,7 @@ const {
     infoMessages
 } = responses;
 
+// todo: make this function more dynamic so it can detect and display internal server error messages as well
 const getPasswordErrorMessage = error => {
     let specificMessage = error.errors
         ? errorMessages.passwordValidationMessages[error.errors[0].validatorKey]

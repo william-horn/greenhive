@@ -14,7 +14,8 @@ const Post = require('../../models/Post');
     all user posts.
 */
 
-const createUsePost = async (userId, postData) => {
+// todo: add comment
+const createUserPost = async (userId, postData) => {
     const { title, content } = postData;
     const user = await User.findByPk(userId);
 
@@ -30,14 +31,15 @@ const createUsePost = async (userId, postData) => {
     }
 }
 
+// todo: add comment
 const GET_root = async (req, res) => {
     res.json('N/A');
 };
 
+// todo: add comment
 const POST_root = async (req, res) => {
-    const result = await createUsePost(req.session.userId, req.body);
+    const result = await createUserPost(req.session.userId, req.body);
     console.log('Post request from user:', req.session.userId);
-    console.log('saved result: ', result);
     res.status(200).json('Worked');
 }
 
