@@ -11,13 +11,13 @@
                     <header>
                         <h2 class="profile-title profile-label title has-text-centered">Welcome</h2>
                         <div class="img-frame center-content-wide">
-                            <img class="profile-img fill-container" src="./images/profile-images/image-0.jpg" alt="">
+                            <img class="profile-img fill-container" src="{{profileImg}}" alt="">
                         </div>
                         <p class="profile-username is-size-4 has-text-centered">{{username}}</p>
                     </header>
 
                     <section class="section pl-0 pr-0 pt-5 center-content-wide">
-                        <p class="profile-label has-text-centered">Select a new environmental category:</p>
+                        <p class="profile-label has-text-centered">Select a New Category:</p>
                         <button id="change-category-btn" class="profile-btn button mt-3">Change Category</button>
                     </section>
                 </div>
@@ -68,19 +68,19 @@
                 <div class="fill-container main-window-background">
                     <div class="fill-container main-window-foreground">
                         <header>
-                            <h1 class="main-window-title has-text-centered title is-size-2">Oceans</h1>
+                            <h1 id="main-window-title" class="main-window-title has-text-centered title is-size-2">Oceans</h1>
                         </header>
 
                         <div class="searchbar-container center-content-wide">
-                            <input class="searchbar" type="text" placeholder="Search...">
+                            <input id="searchbar" class="searchbar" type="text" placeholder="Search...">
                         </div>
 
                         <div class="content-window">
-                            <div class="content-frame fill-container">
-                                <div id="content-container" class="content-container">
-                                    {{#each plainData as | post |}}
-                                        {{> search-result-card post}}
-                                    {{/each}}
+                            <div class="content-frame-buffer fill-container">
+                                <div class="content-frame fill-container">
+                                    <div id="content-container" class="content-container">
+                                        {{!-- {{> search-result-card}} --}}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -29,6 +29,7 @@ body {
 /* 1st-most outer container of register GUI */
 .hero {
     box-shadow: 0 0 50px;
+    width: 310px;
 }
 
 /* 2nd-most outer container of register GUI */
@@ -86,6 +87,25 @@ body {
     transition-delay: 0.5s; */
     transition: box-shadow 0.5s;
     border: none;
+}
+
+.register-error-message {
+    display: none;
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: lighter;
+    font-size: 1rem;
+    opacity: 0;
+}
+
+.fade-in {
+    animation: fadeIn ease 2s forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0 }
+    100% { opacity: 1 }
 }
 
 a {

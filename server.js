@@ -68,6 +68,7 @@ const helpers = require('./utils/helpers');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_RESET_ON_LOAD = process.env.DB_RESET_ON_LOAD === 'true';
+const DB_SEED_ENABLED = process.env.DB_SEED_ENABLED === 'true';
 
 // global middleware
 app.use(express.json());
@@ -106,8 +107,8 @@ const plantSeeds = async () => {
   const Post = models.Post;
 
   await User.bulkCreate([
-      { username: 'test_user_0', password: 'test123', page_visits: 1 },
-      { username: 'test_user_1', password: 'test123', page_visits: 1 },
+      { username: 'test_user_0', password: 'test123', page_visits: 1, profile_visits: 0 },
+      { username: 'test_user_1', password: 'test123', page_visits: 1, profile_visits: 0 },
   ]);
 
   const makeUserPost = data => {
@@ -159,5 +160,5 @@ sequelizeConnection.sync({ force: DB_RESET_ON_LOAD })
   })
   .then(() => {
     // seed the database (test code)
-    if (DB_RESET_ON_LOAD) plantSeeds();
+    if (DB_SEED_ENABLED) plantSeeds();
   });

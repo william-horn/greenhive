@@ -26,6 +26,7 @@
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
     font-family: "Ubuntu", sans-serif;
     padding: 5px;
+    justify-content: center;
   }
   
   header nav {
@@ -187,6 +188,13 @@ section {
   padding:60px;
 }
 
+@media screen and (max-width: 1272px) {
+  .hero-cta {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+
 @media screen and (max-width: 980px) {
   header {
     padding-bottom: 0;
@@ -209,12 +217,18 @@ section {
     font-size: 20px;
   }
 
+  .hero {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   footer h2, footer div {
     text-align: center;
     width: 100%;
   }
   .hero-cta {
     width: 100%;
+    margin: 0 auto;
   }
   
   .hero-cta {

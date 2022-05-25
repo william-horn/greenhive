@@ -1,10 +1,27 @@
 
 /* Globals */
 :root {
-    --themeOceanBackgroundColor: #438dd6;
-    --themeOceanBackgroundColorDark: #23394e;
-    --themeOceanForegroundColor: white;
-    --themeOceanForegroundColorDark: #395263;
+    --themeBackgroundImage: url('../images/backgrounds/oceans/ocean-2.jpg');
+
+    --themeForegroundColor: #23394e;
+    --themeBackgroundColor: #395263;
+
+    --themeTitleColor: white;
+    --themeTextLabelColor: #6d7a8d;
+    --themeButtonDarkColor: #121a23;
+    --themeButtonLightColor: #495f78;
+    --themeTextBackgroundColor: #0e3652;
+
+    --themeTextColor: #99bceb;
+    --themeButtonTextColor: #b1dcff;
+
+    --themeSearchbarShadow: 0 0 40px #1f97a3;
+    --themeContentWindowShadow: 0 0 30px #446fa4;
+    --themeCardShadow: 0 0 10px #1c3e62;
+    --themeMainWindowTitleShadow: 0 0 10px #3abaff;
+
+    --themeCardBackground: none;
+
 }
 
 html {
@@ -87,7 +104,7 @@ input {
 
 /* Styling */
 .sidebar {
-    background-color: var(--themeOceanBackgroundColor);
+    background-color: var(--themeForegroundColor);
     box-shadow: 0 0 10px black;
     z-index: 2;
 
@@ -98,12 +115,11 @@ input {
 }
 
 .sidebar[data-theme='dark'] {
-    background-color: var(--themeOceanBackgroundColorDark);
+    background-color: var(--themeForegroundColor);
 }
 
 
 .profile-title {
-    color: white;
     margin-top: 10px;
 }
 
@@ -126,7 +142,7 @@ input {
 }
 
 .profile-label {
-    color: #6d7a8d; /* todo: make variable for */
+    color: var(--themeTextLabelColor); /* todo: make variable for */
     font-style: italic;
 }
 
@@ -135,8 +151,8 @@ input {
 .post-close-btn {
     border-radius: 10px;
     font-weight: 500;
-    background-color: #121a23; /* todo: make variable for */
-    color: #b1dcff !important; /* todo: make variable for */
+    background-color: var(--themeButtonDarkColor); /* todo: make variable for */
+    color: var(--themeButtonTextColor) !important; /* todo: make variable for */
     border: none;
     width: 100%;
 }
@@ -144,7 +160,7 @@ input {
 .profile-btn:hover,
 .category-btn:hover,
 .post-close-btn:hover {
-    color: #e8f5ff !important;
+    color: var(--themeButtonTextColor) !important;
 }
 
 /* remove bulma behavior */
@@ -163,7 +179,7 @@ input {
 
 
 .main-window {
-    background-color: var(--themeOceanForegroundColor);
+    background-color: var(--themeForegroundColor);
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -172,11 +188,11 @@ input {
 }
 
 .main-window[data-theme='dark'] {
-    background-color: var(--themeOceanForegroundColorDark);
+    background-color: var(--themeBackgroundColor);
 }
 
 .main-window-background {
-    background-image: url('../images/backgrounds/oceans/ocean-2.jpg');
+    background-image: var(--themeBackgroundImage);
     background-size: cover;
     box-shadow: 0 0 10px black;
     /* border-radius: 10px; */
@@ -187,7 +203,7 @@ input {
     padding-top: 70px;
 
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-direction: column;
 
     /* background-color: white; */
@@ -199,7 +215,7 @@ input {
     padding-top: 10px;
     margin-bottom: 5px;
     font-family: 'system-ui';
-    text-shadow: 0 0 10px #3abaff;
+    text-shadow: var(--themeMainWindowTitleShadow);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -224,7 +240,7 @@ input {
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 15px;
-    box-shadow: 0 0 40px #1f97a3;
+    box-shadow: var(--themeSearchbarShadow);
 }
 
 
@@ -242,12 +258,17 @@ input {
     margin-right: auto;
     margin-bottom: 30px;
     height: 70%;
-    box-shadow: 0 0 30px black;
+    box-shadow: var(--themeContentWindowShadow);
     border-radius: 15px;
 }
 
-.content-frame {
+.content-frame-buffer {
     position: relative;
+}
+
+.content-frame {
+    position: absolute;
+    overflow-y: scroll;
 }
 
 .content-container {
@@ -258,7 +279,6 @@ input {
     position: absolute;
     height: 100%;
     padding: 10px;
-    overflow-y: scroll;
 }
 
 
@@ -271,12 +291,39 @@ input {
     padding-right: 20px;
     padding-top: 10px;
     padding-bottom: 20px;
-    background: none;
+    background: var(--themeCardBackground);
     border-radius: 20px;
     width: 250px;
     height: 250px;
     margin-bottom: 15px;
-    box-shadow: 0 0 10px black;
+    box-shadow: var(--themeCardShadow);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    overflow-y: scroll;
+    /* border: 2px solid #97c5e6; */
+}
+
+.card h3,
+.card h4 {
+    color: var(--themeTitleColor);
+    text-align: center;
+}
+
+.card p {
+    text-align: center;
+    color: var(--themeTextColor);
+    border-radius: 10px;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--themeTextBackgroundColor);
+}
+
+.read-more-btn {
+    background-color: var(--themeButtonLightColor);
 }
 
 .card:not(:last-child) {
@@ -305,7 +352,7 @@ input {
     height: 60%;
     min-height: 400px;
     margin: 0 auto;
-    background-color: #23394e;
+    background-color: var(--themeForegroundColor);
     min-width: 250px;
     box-shadow: 0 0 10px black;
 
@@ -314,6 +361,10 @@ input {
     justify-content: space-between;
     align-items: center;
     overflow-y: scroll;
+}
+
+#new-post-btn {
+    border-radius: 0;
 }
 
 .category-btn,

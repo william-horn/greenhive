@@ -38,8 +38,8 @@ const {
     errorMessages,
     successMessages,
     infoMessages,
-    getPasswordErrorMessage,
-    getAccountConfirmationMessage
+    getSignupValidationError,
+    getAccountConfirmationMessage,
 } = require('../aliases/response-messages');
 
 
@@ -53,15 +53,6 @@ const {
 const setRegisterVariant = (req, res, next) => {
     const registerVariant = req.query.variant || 'login'; // login | signup | logout
     req.registerVariant = registerVariant;
-
-    req.session.logout = function() {
-        this.isLoggedIn = false;
-    }
-
-    req.session.login = function() {
-        this.isLoggedIn = true;
-    }
-
     next();
 }
 
@@ -95,7 +86,7 @@ const GET_root = (req, res) => {
     and the session should recognize that they are logged out
     */
     if (registerVariant === 'logout') {
-        req.session.logout();
+        req.session.isLoggedIn = false;
         return res.redirect('/');
     }
 
@@ -141,7 +132,7 @@ const POST_root_signup = async (req, res) => {
         })
 
         /*
-        if password validation passed with no errors, then set the user session as
+        if password/username validation passed with no errors, then set the user session as
         logged in and send back an ok response.
         */
         req.session.isLoggedIn = true;
@@ -153,14 +144,13 @@ const POST_root_signup = async (req, res) => {
         });
 
         /*
-        if the password validation did NOT pass, then catch the error and send
+        if the password/username validation did NOT pass, then catch the error and send
         a server error back to the client
         */
     } catch(err) {
-        console.log('ERROR:', err);
         res.status(500).json({
-            message: errorMessages.signupPasswordFailed,
-            report: getPasswordErrorMessage(err),
+            message: errorMessages.signupFailed,
+            report: getSignupValidationError(err)
         });
     }
 }
@@ -202,7 +192,7 @@ const POST_root_login = async (req, res, next) => {
         if (!existingUser) {
             return res.status(500).json({
                 message: errorMessages.loginFailed,
-                report: errorMessages.loginUsernameFailed
+                report: { long: errorMessages.loginUsernameFailed }
             });
         }
 
@@ -237,7 +227,7 @@ const POST_root_login = async (req, res, next) => {
         */
         return res.status(500).json({ 
             message: errorMessages.loginFailed,
-            report: errorMessages.loginPasswordFailed
+            report: { long: errorMessages.loginPasswordFailed }
         });
     }
 
@@ -249,19 +239,12 @@ const POST_root_login = async (req, res, next) => {
     if (existingUser) {
         return res.status(500).json({
             message: errorMessages.signupFailed,
-            report: errorMessages.signupUsernameFailed
+            report: { long: errorMessages.signupUsernameFailed }
         });
     }
 
     // go to the POST_root_signup function
     next();
-}
-
-const more = (req, res, next) => {
-
-    console.log('after');
-    next();
-
 }
 
 /* ------------------- */
@@ -270,7 +253,7 @@ const more = (req, res, next) => {
 router
     .route('/')
     .get(GET_root)
-    .post(POST_root_login, POST_root_signup, more)
+    .post(POST_root_login, POST_root_signup)
 
 /* ------------- */
 /* Export Module */

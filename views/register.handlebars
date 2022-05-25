@@ -3,17 +3,17 @@
 <section class="hero is-small is-light hero-background-image">
     <div class="hero-body columns">
         <div class="column">
-            <div class="card p-6 has-background-light">
+            <div class="card p-5 has-background-light">
                 <h2 class="card-header-title is-size-3 is-italic has-text-centered">{{getRegisterVariantAlias registerVariant 'rendered'}}</h2>
                 <div class="card-content is-size-5 has-text-weight-semibold">
 
                     {{!-- ? Look into converting this into a form -Will [05/22/2022] --}}
                     <div class="register-container" id="register-container" data-register-variant="{{registerVariant}}">
                         <label for="username-box">Username:</label>
-                        <input name="username-box" type="text" id="username-box">
+                        <input name="username-box" type="text" id="username-box" value="{{blank}}">
 
                         <label for="password-box">Password:</label>
-                        <input name="password-box" type="password" id="password-box">
+                        <input name="password-box" type="password" id="password-box" value="{{blank}}">
 
                         <button class="btn button is-primary" type="submit" id="register-btn">
                             {{getRegisterVariantAlias registerVariant 'rendered'}}
@@ -23,6 +23,8 @@
                             <a type="button" href="/register?variant={{routes.[0]}}">{{render.[0]}}</a>
                         {{/with}}
                     </div>
+
+                    <p id="info-message" class="register-error-message">testing</p>
 
                     <script src="./js/register.js"></script>
                 </div>

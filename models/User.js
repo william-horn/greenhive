@@ -1,5 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
+//
+const { accountSettings } = require('../user_settings');
+const { passwordCriteria, usernameCriteria } = accountSettings;
+//
 const sequelizeConnection = require('../config/sequelizeConnection');
 
 const User = sequelizeConnection.define('user', {
@@ -13,16 +17,16 @@ const User = sequelizeConnection.define('user', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: { 
-            len: [3, 25], 
-            notEmpty: true
+            len: [usernameCriteria.minLength, usernameCriteria.maxLength], 
+            notEmpty: usernameCriteria.notEmpty
         }
     },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [5, 30], 
-            notEmpty: true 
+            len: [passwordCriteria.minLength, passwordCriteria.maxLength], 
+            notEmpty: passwordCriteria.notEmpty
         }
     },
     page_visits: {
@@ -42,7 +46,7 @@ const User = sequelizeConnection.define('user', {
     modelName: 'user',
     freezeTableName: true,
     underscored: true,
-    timestamps: false
+    // timestamps: false
 });
 
 User.beforeCreate(async user => {

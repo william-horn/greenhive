@@ -41,16 +41,30 @@ const POST_root = async (req, res) => {
             type: ''
         }
     */
-    console.log('post request recieved');
-    const result = await createUserPost(req.session.userData.id, req.body);
-    console.log('Post request from user:', req.session.userId);
-    res.status(200).json('Worked');
+   try {
+        const result = await createUserPost(req.session.userData.id, req.body);
+        res.status(200).json('Worked');
+   } catch(err) {
+       throw err;
+   }
 }
 
 const GET_root = async (req, res) => {
-    const allPosts = await Post.findAll();
-    const plainData = allPosts.map(post => post.get({ plain: true }));
 
+    let allPosts;
+    const ofType = req.query.type;
+    const searchFilter = req.query.filter;
+
+    if (ofType) {
+        const searchBuild = { type: ofType }
+        //if (searchFilter) searchBuild.title = searchFilter;
+
+        allPosts = await Post.findAll({ where: searchBuild});
+    } else {
+        allPosts = await Post.findAll();
+    }
+
+    const plainData = allPosts.map(post => post.get({ plain: true }));
     res.status(200).json(plainData);
 }
 

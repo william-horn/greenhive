@@ -37,7 +37,7 @@ const Post = sequelizeConnection.define('post', {
     modelName: 'post',
     freezeTableName: true,
     underscored: true,
-    timestamps: false
+    // timestamps: false
 });
 
 module.exports = Post;
