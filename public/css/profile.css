@@ -15,6 +15,17 @@ p {
     color: white;
 }
 
+/* todo: weird hover thingy pls fix later <3 */
+a {
+    all: unset;
+    height: 100%;
+    width: 100%;
+}
+
+a:hover {
+    all: unset;
+}
+
 input {
     border: none;
     outline: none;
@@ -82,6 +93,7 @@ input {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-y: scroll;
 }
 
 .sidebar[data-theme='dark'] {
@@ -118,25 +130,30 @@ input {
 }
 
 .profile-btn,
-.category-btn {
-    border-radius: 0;
+.category-btn,
+.post-close-btn {
+    border-radius: 10px;
     font-weight: 500;
     background-color: #121a23; /* todo: make variable for */
     color: #b1dcff !important; /* todo: make variable for */
     border: none;
+    width: 100%;
 }
 
 .profile-btn:hover,
-.category-btn:hover {
+.category-btn:hover,
+.post-close-btn:hover {
     color: #e8f5ff !important;
 }
 
 /* remove bulma behavior */
 .profile-btn:active,
-.category-btn:active { border: none !important; }
+.category-btn:active,
+.post-close-btn:active { border: none !important; }
 
 .profile-btn:focus,
-.category-btn:focus { border: none !important; box-shadow: none !important; }
+.category-btn:focus,
+.post-close-btn:focus { border: none !important; box-shadow: none !important; }
 /* --------------------- */
 
 
@@ -270,7 +287,8 @@ input {
 
 
 
-.category-selection-background {
+.category-selection-background,
+.new-post-background {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -279,9 +297,11 @@ input {
     display: none;
 }
 
-.category-selection-container {
+.category-selection-container,
+.new-post-container {
     width: 25%;
     height: 60%;
+    min-height: 400px;
     margin: 0 auto;
     background-color: #23394e;
     min-width: 250px;
@@ -291,18 +311,28 @@ input {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    overflow-y: scroll;
 }
 
-.category-btn {
+.category-btn,
+.post-close-btn {
     width: 100%;
     max-width: 300px;
 }
 
-.category-buffer {
+.category-buffer,
+.post-buffer {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
+.post-textarea {
+    height: 75px !important;
+    resize: none;
+}
+
+
 
 

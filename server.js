@@ -122,21 +122,24 @@ const plantSeeds = async () => {
     author_id: 1, 
     author_name: 'test_user_0',
     title: 'ocean help', 
-    content: 'ocean is ded pls help'
+    content: 'ocean is ded pls help',
+    type: 'Ocean'
   });
 
   await makeUserPost({
     author_id: 1, 
     author_name: 'test_user_0',
     title: 'something else', 
-    content: 'idek'
+    content: 'idek',
+    type: 'Forest',
   });
 
   await makeUserPost({
     author_id: 2, 
     author_name: 'test_user_1',
     title: 'trees', 
-    content: 'something something rainforest'
+    content: 'something something rainforest',
+    type: 'Air pollution'
   });
 
 
