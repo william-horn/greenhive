@@ -52,7 +52,8 @@ const responses = {
     infoMessages: {
 
         passwordCriteria: 'Password must be at least $(minLength) characters',
-        accountConfirmation: 'You have created a new account: $(username)'
+        usernameCriteria: 'Username must be between $(minLength) and $(maxLength) characters long',
+        accountConfirmation: 'You have created a new account: $(username)',
 
     }
 
@@ -64,18 +65,34 @@ const {
     infoMessages
 } = responses;
 
+// todo: make this function more dynamic so it can detect and display internal server error messages as well
 const getPasswordErrorMessage = error => {
-    const specificMessage = errorMessages.passwordValidationMessages[error.errors[0].validatorKey];
-    return specificMessage || errorMessages.passwordFailed;
+    let specificMessage;
+
+    if (typeof error === 'object') {
+        specificMessage = error.errors
+            ? errorMessages.passwordValidationMessages[error.errors[0].validatorKey]
+            : errorMessages.passwordFailed;
+    } else {
+        specificMessage = error;
+    }
+    
+    return specificMessage;
 }
 
 const getPasswordCriteriaMessage = criteria => {
-    const template = infoMessages.passwordCriteria;
-    return template.replace(placeholder, (_, cap) => criteria[cap]);
+    return infoMessages.passwordCriteria
+        .replace(placeholder, (_, cap) => criteria[cap]);
+}
+
+const getUsernameCriteriaMessage = criteria => {
+    return infoMessages.usernameCriteria
+        .replace(placeholder, (_, cap) => criteria[cap]);
 }
 
 const getAccountConfirmationMessage = username => {
-    return infoMessages.accountConfirmation.replace(placeholder, username);
+    return infoMessages.accountConfirmation
+        .replace(placeholder, username);
 }
 
 module.exports = {
@@ -84,5 +101,6 @@ module.exports = {
     infoMessages,
     getPasswordErrorMessage,
     getPasswordCriteriaMessage,
-    getAccountConfirmationMessage
+    getAccountConfirmationMessage,
+    getUsernameCriteriaMessage
 };

@@ -1,39 +1,98 @@
-<!--Header section -->
 
-<header class="navbar has-background-dark" role="navigation" aria-label="main navigation">
-      <h1 class="navbar-brand has-text-grey-darker is-size-2">
-        <a id="top">Welcome</a>
-      </h1>
-    </header> 
-    <!--Main content -->
-    <main>
-      <section class="hero is-small is-warning">
-        <div class="hero-body columns">
-          <div class="column is-3">
-            <div class="card p-4 has-background-white">
-              <h2 class="card-header-title">Username</h2>
-              <div class="card-content">
-                <figure class="image is-128x128">
-                  <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
-                </figure>
-              </div>
+<link rel="stylesheet" href="./css/profile.css">
+<link rel="stylesheet" href="./css/visibility.css">
+
+<section class="hero is-fullheight">
+    <div class="hero-body p-0">
+        <div class="fill-viewport columns">
+
+            <div class="sidebar column is-2-desktop is-3-tablet is-12-mobile" data-theme="dark">
+                <div class="container">
+                    <header>
+                        <h2 class="profile-title profile-label title has-text-centered">Welcome</h2>
+                        <div class="img-frame center-content-wide">
+                            <img class="profile-img fill-container" src="./images/profile-images/image-0.jpg" alt="">
+                        </div>
+                        <p class="profile-username is-size-4 has-text-centered">{{username}}</p>
+                    </header>
+
+                    <section class="section pl-0 pr-0 pt-5 center-content-wide">
+                        <p class="profile-label has-text-centered">Select a new environmental category:</p>
+                        <button id="change-category-btn" class="profile-btn button mt-3">Change Category</button>
+                    </section>
+                </div>
+
+                <footer class="center-content-wide">
+                    <p class="profile-label has-text-centered">Settings:</p>
+                    <button id="logout-btn" class="profile-btn button mt-3"><a href="/register?variant=logout">Logout</a></button>
+                    <button id="logout-btn" class="profile-btn button mt-3"><a href="/">Home</a></button>
+                </footer>
             </div>
-          </div>
-      <div class="column">
-        <div class="card p-4 has-background-white">
-          <div class="card-content is-size-2 has-text-weight-semibold">Search  </div>
-          <form id="“user-form” class="card-content">
-            <input
-              id="user-input"
-              class="input is-info"
-              type="text"
-              placeholder="item"
-            /><br />
-            <button type="submit" class="button is-link is-outlined is-rounded m-2" id="button">
-              Search
-            </button>
-          </form>
+
+            <div id="category-selection-background" class="category-selection-background">
+                <div class="category-buffer fill-container">
+                    <div id="category-selection-container" class="category-selection-container p-5">
+                        <div>
+                            <h2 class="title has-text-light has-text-centered is-size-4 mb-6">Select Environment Category:</h2>
+                            <div id="category-container" class="category-container center-content-wide">
+                            </div>
+                        </div>
+                        <button id="category-close-btn" class="category-btn button is-medium">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="new-post-background" class="new-post-background">
+                <div class="post-buffer fill-container">
+                    <div id="new-post-container" class="new-post-container p-5">
+                        <div>
+                            <h2 class="title has-text-light has-text-centered is-size-4 mb-6">Create Post:</h2>
+                            <div id="post-input-container" class="post-input-container center-content-wide">
+                                {{!-- todo: change this to a form element later --}}
+                                <p class="profile-label mb-3">Enter post title:</p>
+                                <input id="post-title" class="input is-info mb-5" type="text">
+
+                                <p class="profile-label mb-3">Enter post content:</p>
+                                <textarea id="post-content" class="post-textarea textarea" name="" id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <button id="post-submit-btn" class="post-close-btn button is-medium mt-6 mb-2">Create Post</button>
+                            <button id="post-close-btn" class="post-close-btn button is-medium">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-window column fill-container-y" data-theme="dark">
+                <div class="fill-container main-window-background">
+                    <div class="fill-container main-window-foreground">
+                        <header>
+                            <h1 class="main-window-title has-text-centered title is-size-2">Oceans</h1>
+                        </header>
+
+                        <div class="searchbar-container center-content-wide">
+                            <input class="searchbar" type="text" placeholder="Search...">
+                        </div>
+
+                        <div class="content-window">
+                            <div class="content-frame fill-container">
+                                <div id="content-container" class="content-container">
+                                    {{> search-result-card}}
+                                </div>
+                            </div>
+                        </div>
+                        <button id="new-post-btn" class="profile-btn button p-3 m-0 is-size-4">+ New Post</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div> 
-    </section>
-    </main>
+    </div>
+</section>
+<script src="./js/profile.js"></script>
+
+
+
+
+
+

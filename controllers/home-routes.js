@@ -12,6 +12,7 @@ const GET_root = async (req, res) => {
 
     res.render('home', {
         registerVariant,
+        isLoggedIn: isLoggedIn,
         pageTitle: 'home',
     })
 
