@@ -19,6 +19,9 @@ This document is responsible for centralizing all significant debug and display 
 ==================================================================================================================================
 */
 
+const { accountSettings } = require('../user_settings');
+const { passwordCriteria, usernameCriteria } = accountSettings;
+
 // regex placeholder for string template: '$(variable)'
 const placeholder = /\$\((.*?)\)/g;
 
@@ -27,19 +30,42 @@ const placeholder = /\$\((.*?)\)/g;
 */
 const responses = {
 
-    errorMessages: {
+    validationMessages: {
 
-        passwordValidationMessages: {
-            len: 'Invalid password length'
+        password: {
+            len: {
+                short: 'Invalid password length',
+                long: 'Password must be between ' + passwordCriteria.minLength + ' and ' + passwordCriteria.maxLength + ' characters'
+            },
+            notEmpty: {
+                short: 'Invalid password',
+                long: 'Password must have at least one non-space character'
+            }
         },
+
+        username: {
+            len: {
+                short: 'Invalid username length',
+                long: 'Username must be between ' + usernameCriteria.minLength + ' and ' + usernameCriteria.maxLength + ' characters'
+            },
+            notEmpty: {
+                short: 'Invalid username',
+                long: 'Username must have at least one non-space character'
+            }
+        }
+    },
+
+    errorMessages: {
 
         usernameTaken: 'This username already exists',
         signupFailed: 'Account creation was unsuccessful',
         loginFailed: 'Invalid login credentials',
+        passwordFailed: 'Password failed',
         loginUsernameFailed: 'An account with this username does not exist',
         loginPasswordFailed: 'Incorrect or invalid password',
         signupUsernameFailed: 'An account with this username already exists',
         signupPasswordFailed: 'Invalid password criteria',
+
     },
 
     successMessages: {
@@ -51,8 +77,7 @@ const responses = {
 
     infoMessages: {
 
-        passwordCriteria: 'Password must be at least $(minLength) characters',
-        accountConfirmation: 'You have created a new account: $(username)'
+        accountConfirmation: 'You have created a new account: $(username)',
 
     }
 
@@ -61,28 +86,42 @@ const responses = {
 const {
     errorMessages,
     successMessages,
-    infoMessages
+    infoMessages,
+    validationMessages
 } = responses;
 
-const getPasswordErrorMessage = error => {
-    const specificMessage = errorMessages.passwordValidationMessages[error.errors[0].validatorKey];
-    return specificMessage || errorMessages.passwordFailed;
+const getSignupValidationError = error => {
+    const nextError = error.errors[0];
+    let specificMessage = validationMessages[nextError.path][nextError.validatorKey];
+    return specificMessage;
 }
 
-const getPasswordCriteriaMessage = criteria => {
-    const template = infoMessages.passwordCriteria;
-    return template.replace(placeholder, (_, cap) => criteria[cap]);
+/*
+const getValidationCriteria = (type) => {
+    const criteria = [];
+
+    const messages = type === 'all'
+        ? validationMessages
+        : validationMessages[type];
+
+    for (info in messages) {
+        criteria.push(messages[info]);
+    }
+
+    return criteria;
 }
+*/
 
 const getAccountConfirmationMessage = username => {
-    return infoMessages.accountConfirmation.replace(placeholder, username);
+    return infoMessages.accountConfirmation
+        .replace(placeholder, username);
 }
 
 module.exports = {
     errorMessages,
     successMessages,
     infoMessages,
-    getPasswordErrorMessage,
-    getPasswordCriteriaMessage,
-    getAccountConfirmationMessage
+    validationMessages,
+    getSignupValidationError,
+    getAccountConfirmationMessage,
 };

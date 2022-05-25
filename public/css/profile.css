@@ -1,0 +1,391 @@
+
+/* Globals */
+:root {
+    --themeBackgroundImage: url('../images/backgrounds/oceans/ocean-2.jpg');
+
+    --themeForegroundColor: #23394e;
+    --themeBackgroundColor: #395263;
+
+    --themeTitleColor: white;
+    --themeTextLabelColor: #6d7a8d;
+    --themeButtonDarkColor: #121a23;
+    --themeButtonLightColor: #495f78;
+    --themeTextBackgroundColor: #0e3652;
+
+    --themeTextColor: #99bceb;
+    --themeButtonTextColor: #b1dcff;
+
+    --themeSearchbarShadow: 0 0 40px #1f97a3;
+    --themeContentWindowShadow: 0 0 30px #446fa4;
+    --themeCardShadow: 0 0 10px #1c3e62;
+    --themeMainWindowTitleShadow: 0 0 10px #3abaff;
+
+    --themeCardBackground: none;
+
+}
+
+html {
+    /* overflow: hidden !important; */
+    overflow-y: initial;
+}
+
+p {
+    color: white;
+}
+
+/* todo: weird hover thingy pls fix later <3 */
+a {
+    all: unset;
+    height: 100%;
+    width: 100%;
+}
+
+a:hover {
+    all: unset;
+}
+
+input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    width: 100%;
+}
+
+
+
+
+
+/* Modified Bulma */
+.hero-body {
+    justify-content: center;
+}
+
+/* Utility classes begin */
+.fill-viewport {
+    width: 100vw;
+    height: 100vh;
+}
+
+.fill-container {
+    width: 100%;
+    height: 100%;
+}
+
+.fill-container-x {
+    width: 100%;
+}
+
+.fill-container-y {
+    height: 100%;
+}
+
+.center-wide {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-content-wide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-content-tall {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+/* Utility classes end */
+
+
+
+
+
+
+/* Styling */
+.sidebar {
+    background-color: var(--themeForegroundColor);
+    box-shadow: 0 0 10px black;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+}
+
+.sidebar[data-theme='dark'] {
+    background-color: var(--themeForegroundColor);
+}
+
+
+.profile-title {
+    margin-top: 10px;
+}
+
+.profile-img {
+    padding: 20px;
+    max-width: 200px;
+    box-shadow: 0 0 10px black;
+    border-radius: 50%;
+}
+
+.img-frame {
+    padding: 20px;
+}
+
+.profile-username {
+    margin-top: 20px;
+    font-weight: 800;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #73737f;
+}
+
+.profile-label {
+    color: var(--themeTextLabelColor); /* todo: make variable for */
+    font-style: italic;
+}
+
+.profile-btn,
+.category-btn,
+.post-close-btn {
+    border-radius: 10px;
+    font-weight: 500;
+    background-color: var(--themeButtonDarkColor); /* todo: make variable for */
+    color: var(--themeButtonTextColor) !important; /* todo: make variable for */
+    border: none;
+    width: 100%;
+}
+
+.profile-btn:hover,
+.category-btn:hover,
+.post-close-btn:hover {
+    color: var(--themeButtonTextColor) !important;
+}
+
+/* remove bulma behavior */
+.profile-btn:active,
+.category-btn:active,
+.post-close-btn:active { border: none !important; }
+
+.profile-btn:focus,
+.category-btn:focus,
+.post-close-btn:focus { border: none !important; box-shadow: none !important; }
+/* --------------------- */
+
+
+
+
+
+
+.main-window {
+    background-color: var(--themeForegroundColor);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.main-window[data-theme='dark'] {
+    background-color: var(--themeBackgroundColor);
+}
+
+.main-window-background {
+    background-image: var(--themeBackgroundImage);
+    background-size: cover;
+    box-shadow: 0 0 10px black;
+    /* border-radius: 10px; */
+}
+
+.main-window-foreground {
+    border-radius: inherit;
+    padding-top: 70px;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    /* background-color: white; */
+}
+
+.main-window-title {
+    color: white;
+    padding-left: 20px;
+    padding-top: 10px;
+    margin-bottom: 5px;
+    font-family: 'system-ui';
+    text-shadow: var(--themeMainWindowTitleShadow);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px !important;
+}
+
+
+
+
+
+
+.searchbar-container {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.searchbar {
+    font-size: 1.5rem;
+    width: 70%;
+    margin: 0 auto;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+    box-shadow: var(--themeSearchbarShadow);
+}
+
+
+
+
+
+
+
+
+.content-window {
+    width: 80%;
+    padding: 20px;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    height: 70%;
+    box-shadow: var(--themeContentWindowShadow);
+    border-radius: 15px;
+}
+
+.content-frame-buffer {
+    position: relative;
+}
+
+.content-frame {
+    position: absolute;
+    overflow-y: scroll;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    padding: 10px;
+}
+
+
+
+
+
+
+.card {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    background: var(--themeCardBackground);
+    border-radius: 20px;
+    width: 250px;
+    height: 250px;
+    margin-bottom: 15px;
+    box-shadow: var(--themeCardShadow);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    overflow-y: scroll;
+    /* border: 2px solid #97c5e6; */
+}
+
+.card h3,
+.card h4 {
+    color: var(--themeTitleColor);
+    text-align: center;
+}
+
+.card p {
+    text-align: center;
+    color: var(--themeTextColor);
+    border-radius: 10px;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--themeTextBackgroundColor);
+}
+
+.read-more-btn {
+    background-color: var(--themeButtonLightColor);
+}
+
+.card:not(:last-child) {
+    margin-right: 15px;
+}
+
+
+
+
+
+
+
+.category-selection-background,
+.new-post-background {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    position: absolute;
+    display: none;
+}
+
+.category-selection-container,
+.new-post-container {
+    width: 25%;
+    height: 60%;
+    min-height: 400px;
+    margin: 0 auto;
+    background-color: var(--themeForegroundColor);
+    min-width: 250px;
+    box-shadow: 0 0 10px black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+#new-post-btn {
+    border-radius: 0;
+}
+
+.category-btn,
+.post-close-btn {
+    width: 100%;
+    max-width: 300px;
+}
+
+.category-buffer,
+.post-buffer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.post-textarea {
+    height: 75px !important;
+    resize: none;
+}
+
+
+
+

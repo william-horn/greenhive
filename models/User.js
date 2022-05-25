@@ -1,9 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
+//
+const { accountSettings } = require('../user_settings');
+const { passwordCriteria, usernameCriteria } = accountSettings;
+//
 const sequelizeConnection = require('../config/sequelizeConnection');
 
-class User extends Model {}
-
-User.init({
+const User = sequelizeConnection.define('user', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,29 +17,40 @@ User.init({
         type: DataTypes.STRING,
         allowNull: false,
         validate: { 
-            len: [3, 25], 
-            notEmpty: true
+            len: [usernameCriteria.minLength, usernameCriteria.maxLength], 
+            notEmpty: usernameCriteria.notEmpty
         }
     },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [5, 30], 
-            notEmpty: true 
+            len: [passwordCriteria.minLength, passwordCriteria.maxLength], 
+            notEmpty: passwordCriteria.notEmpty
         }
     },
     page_visits: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
+    },
+    profile_visits: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
     }
-}, {
+
+},
+{
     sequelize: sequelizeConnection,
     modelName: 'user',
-    tableName: 'users',
     freezeTableName: true,
     underscored: true,
-    timestamps: false
+    // timestamps: false
+});
+
+User.beforeCreate(async user => {
+    user.password = await bcrypt.hash(user.password, 10);
 });
 
 module.exports = User;

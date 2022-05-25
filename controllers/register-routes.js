@@ -5,7 +5,7 @@
 
 ? @doc-name:            register-routes.js
 ? @doc-created:         05/17/2022
-? @doc-modified:        05/20/2022
+? @doc-modified:        05/23/2022
 
 ==================================================================================================================================
 
@@ -31,22 +31,24 @@ login and signup validation, webpage rendering, and other miscellaneous requests
 /* Import modules */
 /* -------------- */
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 const { 
     errorMessages,
     successMessages,
     infoMessages,
-    getPasswordErrorMessage,
-    getAccountConfirmationMessage
+    getSignupValidationError,
+    getAccountConfirmationMessage,
 } = require('../aliases/response-messages');
+
 
 /*
     Custom middleware for '/register' routes. This middleware just adds a 'registerVariant' property to
     the request object, which parses the url for the 'variant' query parameter. Effectively turning this:
         /register?variant=something
     into this:
-        req.registerVariant = 'something'
+        req.session.registerVariant = 'something'
 */
 const setRegisterVariant = (req, res, next) => {
     const registerVariant = req.query.variant || 'login'; // login | signup | logout
@@ -85,24 +87,18 @@ const GET_root = (req, res) => {
     */
     if (registerVariant === 'logout') {
         req.session.isLoggedIn = false;
-
-        return res.render('home', {
-            registerVariant: 'login',
-            pageTitle: 'home',
-        });
-    }
-
-    /*
-    if the user is logged in then send them back to the homepage to prevent the
-    ability to login multiple times -- which doesn't make any sense
-    */
-    if (req.session.isLoggedIn) {
         return res.redirect('/');
     }
 
+    /*
+    if the user is already logged in then send them back to the homepage to prevent loading
+    the 'login' page when they're already logged in
+    */
+    if (req.session.isLoggedIn) return res.redirect('/');
+
     /* 
     by this point the user is permitted to login or signup, and the
-    webpages for those forms will be sent to the client
+    webpages for those forms will be sent to the client.
     */
     res.render('register', {
         registerVariant,                        
@@ -130,30 +126,31 @@ const POST_root_signup = async (req, res) => {
     the username they have provided, and will now undergo password validation.
     */
     try {
-        const signupResult = await User.create({
+        const newUser = await User.create({
             username: userData.username,
             password: userData.password,
-            page_visits: 1
         })
 
         /*
-        if password validation passed with no errors, then set the user session as
+        if password/username validation passed with no errors, then set the user session as
         logged in and send back an ok response.
         */
         req.session.isLoggedIn = true;
+        req.session.userData = newUser;
+
         res.status(200).json({
             message: successMessages.signupSuccess,
             report: getAccountConfirmationMessage(userData.username)
         });
 
         /*
-        if the password validation did NOT pass, then catch the error and send
+        if the password/username validation did NOT pass, then catch the error and send
         a server error back to the client
         */
     } catch(err) {
         res.status(500).json({
-            message: errorMessages.signupPasswordFailed,
-            report: getPasswordErrorMessage(err),
+            message: errorMessages.signupFailed,
+            report: getSignupValidationError(err)
         });
     }
 }
@@ -195,7 +192,7 @@ const POST_root_login = async (req, res, next) => {
         if (!existingUser) {
             return res.status(500).json({
                 message: errorMessages.loginFailed,
-                report: errorMessages.loginUsernameFailed
+                report: { long: errorMessages.loginUsernameFailed }
             });
         }
 
@@ -204,9 +201,19 @@ const POST_root_login = async (req, res, next) => {
         validation of the password will now occur. If the password validation passes, we
         will send an ok response and user will be directed back to whatever page the 
         front-end code sends them to
+
+        > update: 05/023/2022
+
+            Passwords are now encrypted using the bcrypt node package. This will now compare
+            the encrypted password in the database with the plain text password the user entered
+            to validate that the user login password is correct.
+
+            - Will
+        <
         */
-        if (existingUser.password === userData.password) {
+        if (await bcrypt.compare(userData.password, existingUser.password)) {
             req.session.isLoggedIn = true;
+            req.session.userData = existingUser;
             console.log(`User: ${existingUser.username} has successfully logged in`);
 
             return res.status(200).json({
@@ -216,23 +223,23 @@ const POST_root_login = async (req, res, next) => {
 
         /*
         if the password validation does NOT pass, then the user entered an incorrect password for
-        that account and we will send them a server error.
+        that account and we will send them a validation error.
         */
         return res.status(500).json({ 
             message: errorMessages.loginFailed,
-            report: errorMessages.loginPasswordFailed
+            report: { long: errorMessages.loginPasswordFailed }
         });
     }
 
     /*
     if 'existingUser' exists outside of the login request, meaning this is a signup request, then
     the user is not permitted to create the account because it already exists. if this is the case,
-    we will send the client a server error.
+    we will send the client a signup error.
     */
     if (existingUser) {
         return res.status(500).json({
             message: errorMessages.signupFailed,
-            report: errorMessages.signupUsernameFailed
+            report: { long: errorMessages.signupUsernameFailed }
         });
     }
 
