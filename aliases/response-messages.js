@@ -67,9 +67,15 @@ const {
 
 // todo: make this function more dynamic so it can detect and display internal server error messages as well
 const getPasswordErrorMessage = error => {
-    let specificMessage = error.errors
-        ? errorMessages.passwordValidationMessages[error.errors[0].validatorKey]
-        : errorMessages.passwordFailed
+    let specificMessage;
+
+    if (typeof error === 'object') {
+        specificMessage = error.errors
+            ? errorMessages.passwordValidationMessages[error.errors[0].validatorKey]
+            : errorMessages.passwordFailed;
+    } else {
+        specificMessage = error;
+    }
     
     return specificMessage;
 }

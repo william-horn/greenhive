@@ -135,3 +135,9 @@ input:-webkit-autofill{
 .form__button {
     font: 500 1rem 'Quicksand', sans-serif;
 }
+
+
+@media screen and (max-width: 653px) {
+    body { border: none; }
+}
+

@@ -42,6 +42,7 @@ const {
     getAccountConfirmationMessage
 } = require('../aliases/response-messages');
 
+
 /*
     Custom middleware for '/register' routes. This middleware just adds a 'registerVariant' property to
     the request object, which parses the url for the 'variant' query parameter. Effectively turning this:
@@ -52,6 +53,15 @@ const {
 const setRegisterVariant = (req, res, next) => {
     const registerVariant = req.query.variant || 'login'; // login | signup | logout
     req.registerVariant = registerVariant;
+
+    req.session.logout = function() {
+        this.isLoggedIn = false;
+    }
+
+    req.session.login = function() {
+        this.isLoggedIn = true;
+    }
+
     next();
 }
 
@@ -85,7 +95,7 @@ const GET_root = (req, res) => {
     and the session should recognize that they are logged out
     */
     if (registerVariant === 'logout') {
-        req.session.isLoggedIn = false;
+        req.session.logout();
         return res.redirect('/');
     }
 
@@ -125,10 +135,9 @@ const POST_root_signup = async (req, res) => {
     the username they have provided, and will now undergo password validation.
     */
     try {
-        const signupResult = await User.create({
+        const newUser = await User.create({
             username: userData.username,
             password: userData.password,
-            page_visits: 1
         })
 
         /*
@@ -136,6 +145,8 @@ const POST_root_signup = async (req, res) => {
         logged in and send back an ok response.
         */
         req.session.isLoggedIn = true;
+        req.session.userData = newUser;
+
         res.status(200).json({
             message: successMessages.signupSuccess,
             report: getAccountConfirmationMessage(userData.username)
@@ -211,10 +222,8 @@ const POST_root_login = async (req, res, next) => {
         <
         */
         if (await bcrypt.compare(userData.password, existingUser.password)) {
-            // initialize user session data
             req.session.isLoggedIn = true;
-            req.session.userId = existingUser.id;
-
+            req.session.userData = existingUser;
             console.log(`User: ${existingUser.username} has successfully logged in`);
 
             return res.status(200).json({
@@ -248,13 +257,20 @@ const POST_root_login = async (req, res, next) => {
     next();
 }
 
+const more = (req, res, next) => {
+
+    console.log('after');
+    next();
+
+}
+
 /* ------------------- */
 /* Set Route Listeners */
 /* ------------------- */
 router
     .route('/')
     .get(GET_root)
-    .post(POST_root_login, POST_root_signup)
+    .post(POST_root_login, POST_root_signup, more)
 
 /* ------------- */
 /* Export Module */

@@ -10,7 +10,8 @@ const GET_root = async (req, res) => {
     */
     if (isLoggedIn) {
         res.render('profile', {
-            pageTitle: 'Profile',
+            pageTitle: 'profile',
+            username: req.session.userData.username,
         })
     } else {
         res.redirect('/login');

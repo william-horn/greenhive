@@ -7,8 +7,10 @@
     /* --themePrimaryBackgroundColor: #1f1a07; */
     /* --themePrimaryBackgroundColor: #3d361d; */
     /* --themePrimaryBackgroundColor: #29261a; */
-    --themePrimaryBackgroundColor: #354532;
+    --themePrimaryBackgroundColor: #151f13;
     --themeSecondaryBackgroundColor: #111007;
     --themeHeadingTextColor: #625d42;
     --themeBrandnameColor: #5b7c5a;
+    --themeSpecialTextColor: #8eb570;
+    --themeSelectedTextColor: #a9db82;
 }

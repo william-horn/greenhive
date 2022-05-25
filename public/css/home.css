@@ -54,11 +54,23 @@
     align-items: center;
   }
 
-  header a:hover {
+  header a:not(.my-profile-link):hover {
     /* border-radius: 15px; */
     background-color: var(--themePrimaryBackgroundColor) !important;
     transition-property: background-color;
     transition-duration: 0.25s;
+  }
+
+  .my-profile-link {
+    color: var(--themeSpecialTextColor);
+  }
+
+  .my-profile-link:hover {
+    background: none !important;
+    text-shadow: 0 0 10px #2b441f;
+    color: var(--themeSpecialTextColor);
+    transition-property: color;
+    transition-duration: 0.5s;
   }
 
   .logo-img {
@@ -167,6 +179,7 @@ footer div {
   
   line-height: 1.5;
   text-align: right;
+  color: white;
 }
 
 
@@ -221,3 +234,8 @@ section {
     width: 100%;
   }
 }
+
+
+
+
+

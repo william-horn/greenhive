@@ -27,8 +27,15 @@ const User = sequelizeConnection.define('user', {
     },
     page_visits: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
+    },
+    profile_visits: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
     }
+
 },
 {
     sequelize: sequelizeConnection,
