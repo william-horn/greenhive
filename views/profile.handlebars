@@ -78,7 +78,9 @@
                         <div class="content-window">
                             <div class="content-frame fill-container">
                                 <div id="content-container" class="content-container">
-                                    {{> search-result-card}}
+                                    {{#each plainData as | post |}}
+                                        {{> search-result-card post}}
+                                    {{/each}}
                                 </div>
                             </div>
                         </div>

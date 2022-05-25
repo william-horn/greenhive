@@ -9,6 +9,7 @@
 
 html {
     /* overflow: hidden !important; */
+    overflow-y: initial;
 }
 
 p {
@@ -201,8 +202,9 @@ input {
     text-shadow: 0 0 10px #3abaff;
 }
 
-
-
+::-webkit-scrollbar-thumb {
+    border-radius: 10px !important;
+}
 
 
 

@@ -48,7 +48,10 @@ const POST_root = async (req, res) => {
 }
 
 const GET_root = async (req, res) => {
-    
+    const allPosts = await Post.findAll();
+    const plainData = allPosts.map(post => post.get({ plain: true }));
+
+    res.status(200).json(plainData);
 }
 
 router

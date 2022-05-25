@@ -1,8 +1,13 @@
 const router = require('express').Router();
+const Post = require('../models/Post');
 
 // todo: add comment
 const GET_root = async (req, res) => {
     const isLoggedIn = req.session.isLoggedIn;
+
+
+    const allPosts = await Post.findAll();
+    const plainData = allPosts.map(post => post.get({ plain: true }));
 
     /*
     if the user is logged in then bring them to their profile page, otherwise
@@ -12,6 +17,7 @@ const GET_root = async (req, res) => {
         res.render('profile', {
             pageTitle: 'profile',
             username: req.session.userData.username,
+            plainData
         })
     } else {
         res.redirect('/login');

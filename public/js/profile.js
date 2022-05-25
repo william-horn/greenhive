@@ -23,7 +23,8 @@ const contentContainerDiv = document.getElementById('content-container');
 ([
     'Oceans',
     'Forests',
-    'Air Pollution',
+    'Air',
+    'Wildlife'
 ]).forEach(name => {
     const categoryBtn = document.createElement('button');
     categoryBtn.classList = "category-btn button is-medium mb-3";
@@ -55,13 +56,11 @@ const createNewPost = async () => {
 }
 
 const getAllPosts = async () => {
-
-    const allPosts = await fetch('/api/posts', {
+    const response = await fetch('/api/posts', {
         headers: { 'Content-Type': 'application/json' }
     });
-
+    const allPosts = await response.json();
     console.log(allPosts);
-
 }
 
 getAllPosts();
