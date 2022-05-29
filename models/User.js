@@ -29,6 +29,11 @@ const User = sequelizeConnection.define('user', {
             notEmpty: passwordCriteria.notEmpty
         }
     },
+    profile_img: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     page_visits: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -123,6 +123,7 @@ const themes = {
 const updateView = async info => {
     currentView = info.value;
     if (lastView === currentView) return;
+    contentContainerDiv.empty();
     lastView = currentView;
 
     clearInterval(loadingAnim);
@@ -164,13 +165,13 @@ const updateView = async info => {
 
         if (currentView != 'wildlife') return;
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
             const randIndex = randomInt(apiData.length);
             const randData = apiData[randIndex];
             apiData.splice(randIndex, 1);
 
             contentContainerDiv.append(genSearchCard({
-                title: 'Endangered Species',
+                title: 'Endangered Species #' + (i + 1),
                 content: randData.scientific_name,
                 author_name: 'IUNC Redlist' 
             }))

@@ -129,6 +129,7 @@ const POST_root_signup = async (req, res) => {
         const newUser = await User.create({
             username: userData.username,
             password: userData.password,
+            profile_img: userData.username.length%6
         })
 
         /*

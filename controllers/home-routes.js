@@ -13,6 +13,7 @@ const GET_root = async (req, res) => {
     res.render('home', {
         registerVariant,
         isLoggedIn: isLoggedIn,
+        profile_img: req.session.userData.profile_img,
         pageTitle: 'home',
     })
 
