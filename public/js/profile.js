@@ -132,11 +132,28 @@ const updateView = async info => {
 
     if (currentView === 'wildlife') {
 
+        // loading animation
+        const phases = ['.', '..', '...'];
+        let loadCounter = 0;
+
+        const loadingAnim = setInterval(() => {
+            loadCounter++;
+            searchbarEl.val('Loading endangered species' + phases[loadCounter%3]);
+        }, 500);
+        // loading animation
+
         const apiResponse = await fetch('api/posts?' + new URLSearchParams({ type: 'wildlife', isUserPost: false }), {
             headers: { 'Content-Type': 'application/json' }
         });
 
         const apiData = await apiResponse.json();
+
+        // stop loading animation
+        clearInterval(loadingAnim);
+        searchbarEl.val('');
+        // stop loading animation
+
+        if (currentView != 'wildlife') return;
 
         for (let i = 0; i < 20; i++) {
             const randIndex = randomInt(apiData.length);
@@ -150,12 +167,13 @@ const updateView = async info => {
             }))
         }
 
-        console.log(apiData);
+        getAllPosts(searchbarEl.val(), true);
+        return;
 
     }
 
-
-    getAllPosts(searchbarEl.val(), true);
+    getAllPosts(searchbarEl.val());
+   
 }
 
 
