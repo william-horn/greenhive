@@ -26,6 +26,10 @@ const rootCSS = $(':root');
 // globals
 let currentView = 'ocean';
 
+const randomInt = max => {
+    return ~~(Math.random()*max);
+}
+
 // todo: create a separate file for themes
 const themes = {
     ocean: {
@@ -60,8 +64,8 @@ const themes = {
             themeTextLabelColor: '#5e411f',
             themeButtonDarkColor: '#1f1109',
             themeButtonLightColor: '#907646',
-            themeTextBackgroundColor: '#3e2e18',
-            themeTextColor: '#ff7f00',
+            themeTextBackgroundColor: '#314228',
+            themeTextColor: '#bdf99f',
             themeButtonTextColor: '#e8f5ff',
             themeSearchbarShadow: '0 0 20px #ac832b',
             themeContentWindowShadow: '0 0 30px #193614',
@@ -90,12 +94,30 @@ const themes = {
             themeCardBackground: 'none',
         } 
      },
-    wildlife: { properties: {} },
+    wildlife: { 
+        properties: {
+            themeBackgroundImage: 'url(../images/backgrounds/wildlife/wildlife-1.jpg)',
+
+            themeForegroundColor: '#3b3c24',
+            themeBackgroundColor: '#665b3d',
+            themeTitleColor: '#ffffff',
+            themeTextLabelColor: '#fdce93',
+            themeButtonDarkColor: '#84854b',
+            themeButtonLightColor: '#333921',
+            themeTextBackgroundColor: '#6d715c',
+            themeTextColor: '#fffdc5',
+            themeButtonTextColor: '#ffffff',
+            themeSearchbarShadow: '0 0 40px #ded59a',
+            themeContentWindowShadow: '0 0 30px #b9a475',
+            themeCardShadow: '0 0 10px #c3bd86',
+            themeMainWindowTitleShadow: '0 0 10px #c69452',
+            themeCardBackground: '#635d43',
+        } 
+    },
 }
 
-const updateView = info => {
+const updateView = async info => {
     closeCategoryForm();
-    contentContainerDiv.empty();
 
     currentView = info.value;
     mainWindowTitleEl.text(info.render);
@@ -106,6 +128,34 @@ const updateView = info => {
     for (theme in selectedTheme) {
         root.style.setProperty('--' + theme, selectedTheme[theme]);
     }
+
+
+    if (currentView === 'wildlife') {
+
+        const apiResponse = await fetch('api/posts?' + new URLSearchParams({ type: 'wildlife', isUserPost: false }), {
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const apiData = await apiResponse.json();
+
+        for (let i = 0; i < 20; i++) {
+            const randIndex = randomInt(apiData.length);
+            const randData = apiData[randIndex];
+            apiData.splice(randIndex, 1);
+
+            contentContainerDiv.append(genSearchCard({
+                title: 'Endangered Species',
+                content: randData.scientific_name,
+                author_name: 'IUNC Redlist' 
+            }))
+        }
+
+        console.log(apiData);
+
+    }
+
+
+    getAllPosts(searchbarEl.val(), true);
 }
 
 
@@ -146,12 +196,17 @@ const genSearchCard = data => {
 
 // todo: make a template function for json requests
 const createNewPost = async () => {
+    const title = postTitleEl.val().trim();
+    const content = postContentEl.val().trim();
+
+    if (!title || !content) return;
+
     const response = await fetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            title: postTitleEl.val(),
-            content: postContentEl.val(),
+            title,
+            content,
             type: currentView
         })
     });
@@ -161,12 +216,13 @@ const createNewPost = async () => {
 }
 
 
-const getAllPosts = async searchQuery => {
-    const response = await fetch('/api/posts?' + new URLSearchParams({ type: currentView, filter: searchQuery }), {
+const getAllPosts = async (searchQuery, keep) => {
+    const response = await fetch('/api/posts?' + new URLSearchParams({ type: currentView, isUserPost: true, filter: searchQuery }), {
         headers: { 'Content-Type': 'application/json' },
     });
 
     const data = await response.json();
+    if (!keep) contentContainerDiv.empty();
     data.forEach(post => contentContainerDiv.append(genSearchCard(post)));
 }
 
@@ -182,6 +238,7 @@ searchbarEl.keypress(event => {
     }
 });
 
+getAllPosts(searchbarEl.val());
 
 changeCategoryBtn.click(showCategoryForm);
 $('#category-close-btn').click(closeCategoryForm);
@@ -190,7 +247,8 @@ newPostBtn.click(showPostForm);
 $('#post-close-btn').click(closePostForm);
 
 // submit post
-postSubmitBtn.click(() => {
-    createNewPost();
+postSubmitBtn.click(async () => {
+    await createNewPost();
     closePostForm();
+    await getAllPosts(searchbarEl.val());
 });

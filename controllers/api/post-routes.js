@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const axios = require('axios').default;
 const User = require('../../models/User');
 const Post = require('../../models/Post');
 
@@ -52,20 +53,32 @@ const POST_root = async (req, res) => {
 const GET_root = async (req, res) => {
 
     let allPosts;
-    const ofType = req.query.type;
-    const searchFilter = req.query.filter;
+    const isUserPost = req.query.isUserPost;
 
-    if (ofType) {
-        const searchBuild = { type: ofType }
-        //if (searchFilter) searchBuild.title = searchFilter;
 
-        allPosts = await Post.findAll({ where: searchBuild});
+    if (isUserPost === 'true') {
+        const ofType = req.query.type;
+        //const searchFilter = req.query.filter;
+
+        if (ofType) {
+            const searchBuild = { type: ofType }
+            //if (searchFilter) searchBuild.title = searchFilter;
+
+            allPosts = await Post.findAll({ where: searchBuild});
+        } else {
+            allPosts = await Post.findAll();
+        }
+
+        const plainData = allPosts.map(post => post.get({ plain: true }));
+        res.status(200).json(plainData);
     } else {
-        allPosts = await Post.findAll();
-    }
 
-    const plainData = allPosts.map(post => post.get({ plain: true }));
-    res.status(200).json(plainData);
+        console.log('is running the api call');
+        const apiResponse = await axios.get('https://apiv3.iucnredlist.org/api/v3/species/region/europe/page/0?token=9bb4facb6d23f48efbf424bb05c0c1ef1cf6f468393bc745d42179ac4aca5fee');
+
+        res.json(apiResponse.data.result);
+
+    }
 }
 
 router
