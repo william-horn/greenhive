@@ -4,7 +4,7 @@ GreenHive is a community-based environmentalist sanctuary where people can get t
 ## Description
 * This is a Conservation app where people can join communities related to different resources. All users can post or comment about nature conservation and    environment protection.
  * On the home page the user can sign up or log in and create a profile page to be a part of the Greenhive website. In this website you can choose which areas of concerns related like Air pollution, Ocean, Wildlife and Forest to join, comment, and post.
- * IUCN Red list Api as a part of new technology and used a new package Npm Axios.
+ * IUCN Red list Api as a part of new technology and used  Npm Axios.
 ## Built With
 * HTML5
 * CSS3
@@ -22,7 +22,7 @@ GreenHive is a community-based environmentalist sanctuary where people can get t
 * npm axios
 * GitHub (and automated kanban board)
 ## Website
-
+ https://greenhive-com.herokuapp.com/
 ## Images
 ![home](https://user-images.githubusercontent.com/93412486/170847997-82edcdc1-b936-46a2-92df-85415382d767.PNG)
 
