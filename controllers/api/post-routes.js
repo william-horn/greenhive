@@ -73,7 +73,6 @@ const GET_root = async (req, res) => {
         res.status(200).json(plainData);
     } else {
 
-        console.log('is running the api call');
         const apiResponse = await axios.get('https://apiv3.iucnredlist.org/api/v3/species/region/europe/page/0?token=9bb4facb6d23f48efbf424bb05c0c1ef1cf6f468393bc745d42179ac4aca5fee');
 
         res.json(apiResponse.data.result);
