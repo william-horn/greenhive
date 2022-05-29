@@ -1,4 +1,5 @@
 
+
 // general elements
 const mainWindowTitleEl = $('#main-window-title');
 const searchbarEl = $('#searchbar');
@@ -25,6 +26,9 @@ const rootCSS = $(':root');
 
 // globals
 let currentView = 'ocean';
+let lastView;
+let loadingAnim;
+let loadingWildlife = false;
 
 const randomInt = max => {
     return ~~(Math.random()*max);
@@ -117,9 +121,13 @@ const themes = {
 }
 
 const updateView = async info => {
-    closeCategoryForm();
-
     currentView = info.value;
+    if (lastView === currentView) return;
+    lastView = currentView;
+
+    clearInterval(loadingAnim);
+    searchbarEl.val('');
+    closeCategoryForm();
     mainWindowTitleEl.text(info.render);
 
     const selectedTheme = themes[info.value].properties;
@@ -130,13 +138,14 @@ const updateView = async info => {
     }
 
 
-    if (currentView === 'wildlife') {
+    if (currentView === 'wildlife' && !loadingWildlife) {
+        loadingWildlife = true;
 
         // loading animation
         const phases = ['.', '..', '...'];
         let loadCounter = 0;
 
-        const loadingAnim = setInterval(() => {
+        loadingAnim = setInterval(() => {
             loadCounter++;
             searchbarEl.val('Loading endangered species' + phases[loadCounter%3]);
         }, 500);
@@ -168,6 +177,7 @@ const updateView = async info => {
         }
 
         getAllPosts(searchbarEl.val(), true);
+        loadingWildlife = false;
         return;
 
     }
