@@ -1,5 +1,5 @@
 
-# GreevHive
+# GreenHive
 GreenHive is a community-based environmentalist sanctuary where people can get together and work toward making nature a better place.
 ## Description
 * This is a Conservation app where people can join communities related to different resources. All users can post or comment about nature conservation and    environment protection.
