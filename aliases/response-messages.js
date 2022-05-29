@@ -96,22 +96,6 @@ const getSignupValidationError = error => {
     return specificMessage;
 }
 
-/*
-const getValidationCriteria = (type) => {
-    const criteria = [];
-
-    const messages = type === 'all'
-        ? validationMessages
-        : validationMessages[type];
-
-    for (info in messages) {
-        criteria.push(messages[info]);
-    }
-
-    return criteria;
-}
-*/
-
 const getAccountConfirmationMessage = username => {
     return infoMessages.accountConfirmation
         .replace(placeholder, username);
