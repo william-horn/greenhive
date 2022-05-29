@@ -107,8 +107,8 @@ const plantSeeds = async () => {
   const Post = models.Post;
 
   await User.bulkCreate([
-      { username: 'test_user_0', password: 'test123', page_visits: 1, profile_visits: 0, profile_img: 'test' },
-      { username: 'test_user_1', password: 'test123', page_visits: 1, profile_visits: 0, profile_img: 'test' },
+      { username: 'test_user_0', password: 'test123', page_visits: 1, profile_visits: 0, profile_img: 0 },
+      { username: 'test_user_1', password: 'test123', page_visits: 1, profile_visits: 0, profile_img: 0 },
   ]);
 
   const makeUserPost = data => {
